@@ -1,0 +1,4 @@
+# 项目排除路径
+/admin-common/target/
+/admin-core/target/
+/admin-provider/target/
