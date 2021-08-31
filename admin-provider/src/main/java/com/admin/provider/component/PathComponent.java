@@ -7,6 +7,8 @@ import org.springframework.util.ResourceUtils;
 
 import javax.annotation.Resource;
 
+import static com.admin.provider.component.constant.ConfigKeyConstant.*;
+
 /**
  * @description: 路径组装 组件
  * @author: Zhaotianyi
@@ -17,8 +19,6 @@ public class PathComponent {
     @Resource
     private ConfigService configService;
 
-    public static final String defaultPicPath = "images/";
-    public static final String defaultFilePath = "files/";
 
     /**
      * 获取图片数据库保存,,用作返回相对位置,保存在数据库中
@@ -29,10 +29,10 @@ public class PathComponent {
      * @return 图片相对位置
      */
     public String getImgDbFileName(String fileName,String dataTime) {
-        String imgSavePath = configService.getSysconfig("Img_Save_Path");
+        String imgSavePath = configService.getSysconfig(IMG_SAVE_PATH);
 
         if (StringUtils.isEmpty(imgSavePath)) {
-            return defaultPicPath + fileName;
+            return DEFAULT_PIC_PATH + fileName;
         } else {
             return imgSavePath + dataTime + fileName;
         }
@@ -47,10 +47,10 @@ public class PathComponent {
      * @return  附件相对位置
      */
     public String getFileDbFileName(String fileName,String dataTime) {
-        String fileSavePath = configService.getSysconfig("File_Save_Path");
+        String fileSavePath = configService.getSysconfig(FILE_SAVE_PATH);
 
         if (StringUtils.isEmpty(fileSavePath)) {
-            return defaultFilePath + fileName;
+            return DEFAULT_FILE_PATH + fileName;
         } else {
             return fileSavePath + dataTime + fileName;
         }
@@ -72,7 +72,7 @@ public class PathComponent {
         String localDir = getLocalStorageDir();
         String imgDbFileName = getImgDbFileName(fileName,dataTime);
         if (StringUtils.isEmpty(localDir) || StringUtils.isEmpty(imgDbFileName)) {
-            return ResourceUtils.getURL("classpath:").getPath() + defaultPicPath;
+            return ResourceUtils.getURL("classpath:").getPath() + DEFAULT_PIC_PATH;
         }
         return localDir + imgDbFileName;
     }
@@ -86,7 +86,7 @@ public class PathComponent {
         String localDir = getLocalStorageDir();
         String fileDbFileName = getFileDbFileName(fileName, dataTime);
         if (StringUtils.isEmpty(localDir) || StringUtils.isEmpty(fileDbFileName)) {
-            return ResourceUtils.getURL("classpath:").getPath() + defaultFilePath;
+            return ResourceUtils.getURL("classpath:").getPath() + DEFAULT_FILE_PATH;
         }
         return localDir + fileDbFileName;
     }
@@ -98,12 +98,12 @@ public class PathComponent {
      * @return String 文件绝对路径
      */
     public String getAccessUrl(String dbFileName) {
-        String webResourecesPath = configService.getSysconfig("Web_Resoureces_Path");
+        String webResourecesPath = configService.getSysconfig(WEB_RESOURECES_PATH);
         if (StringUtils.isEmpty(dbFileName)) {
-            dbFileName = "images/default.png";
+            dbFileName = DEFAULT_PIC_PATH+DEFAULT_PIC;
         }
         if (StringUtils.isEmpty(webResourecesPath)) {
-            return "http://127.0.0.1:8080/resources/" + defaultPicPath;
+            return DEFAULT_WEB_RESOURECES_PATH + DEFAULT_PIC_PATH;
         } else {
             return webResourecesPath + dbFileName;
         }

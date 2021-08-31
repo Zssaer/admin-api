@@ -8,6 +8,7 @@ import com.admin.common.result.Result;
 import com.admin.common.result.ResultBuilder;
 import org.springframework.dao.QueryTimeoutException;
 
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -74,17 +75,15 @@ public class ExceptionHandleController {
 
     /**
      * 数据库超时报错拦截
-     * @param ex 错误类型
      * @return Result
      */
-//    @ExceptionHandler(RedisConnectionFailureException.class)
-//    public Result RedisFailHandle(Exception ex) {
-//        return ResultBuilder.failResult("Redis服务连接错误,请确保Redis服务已开启!");
-//    }
+    @ExceptionHandler(RedisConnectionFailureException.class)
+    public Result RedisFailHandle() {
+        return ResultBuilder.failResult("Redis服务连接错误,请确保Redis服务已开启!");
+    }
 
     /**
-     * 数据库超时报错拦截
-     *
+     * API地址报错拦截
      * @return Result
      */
     @ExceptionHandler(NoHandlerFoundException.class)

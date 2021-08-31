@@ -50,7 +50,7 @@ public class CodeGenerator {
 
     public static void main(String[] args) {
 
-            genCode(new String[]{"admin_permission","admin_role"});
+            genCode(new String[]{"sys_log"});
     }
     /**
      * 通过数据表名称生成代码，Model 名称通过解析数据表名称获得，下划线转大驼峰的形式。

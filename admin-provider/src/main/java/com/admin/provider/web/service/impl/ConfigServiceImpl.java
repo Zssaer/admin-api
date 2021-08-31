@@ -10,7 +10,6 @@ import tk.mybatis.mapper.entity.Condition;
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -30,24 +29,22 @@ public class ConfigServiceImpl extends AbstractService<Config> implements Config
     @Override
     public String getSysconfig(String key) {
         Condition condition=new Condition(Config.class);
-        condition.createCriteria().andEqualTo("isSys",1).andEqualTo("key",key);
+        condition.createCriteria().andEqualTo("isSys",1).andEqualTo("configKey",key);
         List<Config> configList = configMapper.selectByCondition(condition);
         return configList.get(0).getConfigValue();
     }
 
     /**
      * 是否采用Redis来进行存储缓存
-     * @return
      */
     @Override
     public boolean isRedisCache() {
         Condition condition=new Condition(Config.class);
         condition.createCriteria().andEqualTo("isSys",1).andEqualTo("configKey","IsRedisCache");
         List<Config> configList = configMapper.selectByCondition(condition);
-        if ("1".equals(configList.get(0).getConfigValue())){
+        if (configList.get(0).getConfigValue().equals("1")){
             return true;
-        }else {
-            return false;
         }
+        return false;
     }
 }

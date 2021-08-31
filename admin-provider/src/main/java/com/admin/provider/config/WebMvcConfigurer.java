@@ -1,11 +1,13 @@
 package com.admin.provider.config;
 
 import cn.dev33.satoken.interceptor.SaAnnotationInterceptor;
+import com.admin.provider.component.PathComponent;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -23,7 +25,8 @@ import java.util.List;
 @Configuration
 public class WebMvcConfigurer implements org.springframework.web.servlet.config.annotation.WebMvcConfigurer {
 
-    private final Logger logger = LoggerFactory.getLogger(WebMvcConfigurer.class);
+    @Autowired
+    private PathComponent pathComponent;
 
     //使用FastJson 作为JSON MessageConverter
     @Override
@@ -37,21 +40,22 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
         converters.add(converter);
     }
 
+    public String getLocalstorageDir(){
+        String localStorageDir = "file:/" + pathComponent.getLocalStorageDir();
+        return localStorageDir;
+    }
+
     //静态资源 映射
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
-        // 解决静态资源无法访问
-        registry.addResourceHandler("/**")
-                .addResourceLocations("classpath:/static/");
         // 解决swagger无法访问
         registry.addResourceHandler("/doc.html")
                 .addResourceLocations("classpath:/META-INF/resources/");
         // 解决swagger的js文件无法访问
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
-
         //设置本地存储文件夹资源映射
-        //registry.addResourceHandler("/resources/**").addResourceLocations(this.getLocalstorageDir());
+        registry.addResourceHandler("/resources/**").addResourceLocations(this.getLocalstorageDir());
     }
 
     // 注册Sa-Token的注解拦截器，打开注解式鉴权功能

@@ -11,8 +11,7 @@ spring:
   profiles:
     #项目运行环境
     active: dev
-
-
+  # 404抛出NoHandlerFoundException错误
   mvc:
     throw-exception-if-no-handler-found=: true
     static-path-pattern: /statics/**
@@ -22,7 +21,9 @@ spring:
     allow-bean-definition-overriding: true
   servlet:
     multipart:
+      # 文件最大上传大小
       max-file-size: 70MB
+      # 请求最大上传大小
       max-request-size: 70MB
   datasource:
     #druid 数据源专有配置

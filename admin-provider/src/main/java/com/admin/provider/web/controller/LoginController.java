@@ -44,7 +44,6 @@ public class LoginController {
 
     @GetMapping("/exit")
     @ApiOperation(value = "退出登陆",notes = "用于管理员退出登陆")
-    @SysLog("退出登陆")
     public Result logout(){
         return ResultBuilder.successResult(adminService.logout());
     }

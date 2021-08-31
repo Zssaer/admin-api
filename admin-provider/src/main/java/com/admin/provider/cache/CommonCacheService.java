@@ -6,8 +6,6 @@ import com.admin.provider.web.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-
 
 /**
  * @description: 缓存服务管理
