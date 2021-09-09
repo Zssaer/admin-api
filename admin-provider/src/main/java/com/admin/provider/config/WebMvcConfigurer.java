@@ -48,12 +48,11 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
     //静态资源 映射
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry){
-        // 解决swagger无法访问
-        registry.addResourceHandler("/doc.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
-        // 解决swagger的js文件无法访问
+        // 解决swagger的相关文件无法访问
         registry.addResourceHandler("/webjars/**")
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
+        registry.addResourceHandler("/**")
+                .addResourceLocations("classpath:/META-INF/resources/");
         //设置本地存储文件夹资源映射
         registry.addResourceHandler("/resources/**").addResourceLocations(this.getLocalstorageDir());
     }

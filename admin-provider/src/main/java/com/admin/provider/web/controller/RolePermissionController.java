@@ -1,9 +1,12 @@
 package com.admin.provider.web.controller;
 
+import cn.dev33.satoken.annotation.SaCheckPermission;
+import cn.dev33.satoken.stp.StpUtil;
 import com.admin.common.result.Result;
 import com.admin.common.result.ResultBuilder;
 import com.admin.common.page.PageReq;
 import com.admin.core.annotation.SysLog;
+import com.admin.provider.dto.MenuDTO;
 import com.admin.provider.model.RolePermission;
 import com.admin.provider.web.service.RolePermissionService;
 import com.github.pagehelper.PageHelper;
@@ -29,6 +32,7 @@ public class RolePermissionController {
 
     @PostMapping
     @ApiOperation(value = "新增角色权限", notes = "新增角色权限")
+    @SaCheckPermission("role-post")
     @SysLog("新增角色权限")
     public Result add(@RequestBody RolePermission rolePermission) {
         rolePermissionService.save(rolePermission);
@@ -37,6 +41,7 @@ public class RolePermissionController {
 
     @DeleteMapping
     @ApiOperation(value = "删除角色权限", notes = "删除角色权限")
+    @SaCheckPermission("role-delete")
     @SysLog("删除角色权限")
     public Result delete(@RequestParam(value = "ids") List<Integer> ids) {
     	Condition con = new Condition(RolePermission.class);
@@ -47,6 +52,7 @@ public class RolePermissionController {
 
     @PutMapping
     @ApiOperation(value = "更新角色权限", notes = "更新角色权限")
+    @SaCheckPermission("role-put")
     @SysLog("更新角色权限")
     public Result update(@RequestBody RolePermission rolePermission) {
         rolePermissionService.update(rolePermission);
@@ -55,6 +61,7 @@ public class RolePermissionController {
 
     @GetMapping
     @ApiOperation(value = "获取角色权限列表", notes = "获取角色权限列表")
+    @SaCheckPermission("role-get")
     @SysLog("获取角色权限列表")
     public Result list(PageReq req) {
         PageHelper.startPage(req.getPage(), req.getSize());
@@ -66,4 +73,13 @@ public class RolePermissionController {
 
         return ResultBuilder.successResult(new PageInfo<RolePermission>(list));
     }
+
+    @GetMapping("/getMenuList")
+    @ApiOperation(value = "获取当前用户菜单列表", notes = "获取当前用户菜单列表")
+    public Result getMyMenuList() {
+        String loginId = StpUtil.getLoginId().toString();
+        List<MenuDTO> menuDTOList = rolePermissionService.getMenu(Integer.valueOf(loginId));
+        return ResultBuilder.successResult(menuDTOList);
+    }
+
 }

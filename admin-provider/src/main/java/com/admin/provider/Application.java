@@ -21,9 +21,14 @@ public class Application {
 
     private static final Log logger = LogFactory.getLog(Application.class);
 
-    public static void main(String[] args) throws UnknownHostException{
+    public static void main(String[] args) {
         SpringApplication.run(Application.class,args);
-        InetAddress address = InetAddress.getLocalHost();
+        InetAddress address = null;
+        try {
+            address = InetAddress.getLocalHost();
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
 
         logger.info("API接口测试平台:"+ address.getHostAddress()+serverPort+"/doc.html");
     }

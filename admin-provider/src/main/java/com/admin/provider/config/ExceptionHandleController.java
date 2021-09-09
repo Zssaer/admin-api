@@ -6,6 +6,8 @@ import cn.dev33.satoken.exception.NotPermissionException;
 import com.admin.common.exception.ServiceException;
 import com.admin.common.result.Result;
 import com.admin.common.result.ResultBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.QueryTimeoutException;
 
 import org.springframework.data.redis.RedisConnectionFailureException;
@@ -21,7 +23,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @RestControllerAdvice
 
 public class ExceptionHandleController {
-
+    private static final Logger logger = LoggerFactory.getLogger(ExceptionHandleController.class);
     /**
      * 普通权限报错拦截
      *
@@ -30,7 +32,8 @@ public class ExceptionHandleController {
      */
     @ExceptionHandler(Exception.class)
     public Result exceptionHandle(Exception ex) {
-        return ResultBuilder.failResult(ex.getMessage());
+        logger.error(ex.getMessage(),ex);
+        return ResultBuilder.failResult("后台错误,请前往服务器控制台查看问题!");
     }
 
     /**
@@ -38,7 +41,11 @@ public class ExceptionHandleController {
      * @return Result
      */
     @ExceptionHandler(NotLoginException.class)
-    public Result exceptionHandle() {
+    public Result notLoginexceptionHandle(Exception ex) {
+        logger.error(ex.getMessage(),ex);
+        if ("token已过期".equals(ex.getMessage())){
+            return ResultBuilder.failResult("账户信息已过期,请重新登录!");
+        }
         return ResultBuilder.failResult("未登录账户,请登录后进行操作!");
     }
 
@@ -49,7 +56,8 @@ public class ExceptionHandleController {
      * @return Result
      */
     @ExceptionHandler(ServiceException.class)
-    public Result exceptionHandle(ServiceException ex) {
+    public Result serviceExceptionHandle(Exception ex) {
+        logger.error(ex.getMessage(),ex);
         return ResultBuilder.failResult(ex.getMessage());
     }
 
@@ -59,7 +67,8 @@ public class ExceptionHandleController {
      * @return Result
      */
     @ExceptionHandler(NotPermissionException.class)
-    public Result notPermissionExceptionHandle() {
+    public Result notPermissionExceptionHandle(Exception ex) {
+        logger.error(ex.getMessage(),ex);
         return ResultBuilder.failResult("当前账户无权限进行此操作,请确保账户拥有该操作权限!");
     }
 
@@ -69,7 +78,8 @@ public class ExceptionHandleController {
      * @return Result
      */
     @ExceptionHandler(QueryTimeoutException.class)
-    public Result TimeoutHandle() {
+    public Result TimeoutHandle(Exception ex) {
+        logger.error(ex.getMessage(),ex);
         return ResultBuilder.failResult("数据库服务连接超时,请确保相关数据库服务已开启!");
     }
 
@@ -78,7 +88,8 @@ public class ExceptionHandleController {
      * @return Result
      */
     @ExceptionHandler(RedisConnectionFailureException.class)
-    public Result RedisFailHandle() {
+    public Result RedisFailHandle(Exception ex) {
+        logger.error(ex.getMessage(),ex);
         return ResultBuilder.failResult("Redis服务连接错误,请确保Redis服务已开启!");
     }
 
@@ -87,7 +98,8 @@ public class ExceptionHandleController {
      * @return Result
      */
     @ExceptionHandler(NoHandlerFoundException.class)
-    public Result notFindHandle() {
+    public Result notFindHandle(Exception ex) {
+        logger.error(ex.getMessage(),ex);
         return ResultBuilder.failResult("API调用地址错误");
     }
 }
