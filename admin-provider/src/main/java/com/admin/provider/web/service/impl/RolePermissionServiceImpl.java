@@ -90,7 +90,7 @@ public class RolePermissionServiceImpl extends AbstractService<RolePermission> i
                 menu.setName(permissionList.get(0).getName());
                 menu.setPath("/" + permissionList.get(0).getPath());
                 menu.setComponent("LAYOUT");
-                menu.setPage(menu.getPath() + "/" + "index.vue");
+                menu.setPage(menu.getPath() + "/" + "Index.vue");
                 menu.setMeta(new Meta(permissionList.get(0).getName(), permissionList.get(0).getIcon()));
 
                 Condition childrenCdt = new Condition(AdminPermission.class);
@@ -113,8 +113,8 @@ public class RolePermissionServiceImpl extends AbstractService<RolePermission> i
             MenuDTO menu = new MenuDTO();
             menu.setName(permission.getName());
             menu.setPath(menuDTO.getPath()+"/"+ permission.getPath());
-            // 子类菜单的访问路径为其菜单下的component文件夹下的vue文件
-            menu.setPage(menuDTO.getPath() + "/" + "component" + "/" + permission.getPath() + ".vue");
+            // 子类菜单的访问路径为其父菜单路径下的 对于名称文件夹的index.vue文件
+            menu.setPage(menuDTO.getPath() + "/" + permission.getPath()  + "/" +  "Index.vue");
             menu.setMeta(new Meta(permission.getName(), permission.getIcon()));
             childMenuList.add(menu);
         }
