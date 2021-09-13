@@ -31,8 +31,9 @@ public class LocalFileComponent {
 
         fileName = generateFileName(fileName);
         String dataTime = gnerateFileDirName();
-
+        // 获取保存路径
         String path = pathComponent.getLocalImgPrefix(fileName,dataTime);
+        // 保存
         this.storeFile(file, path);
         return pathComponent.getImgDbFileName(fileName, dataTime);
     }
