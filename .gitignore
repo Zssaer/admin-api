@@ -2,3 +2,5 @@
 /admin-common/target/
 /admin-core/target/
 /admin-provider/target/
+/.idea/
+/logs/
