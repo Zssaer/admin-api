@@ -9,6 +9,10 @@
     <result column="login_name" jdbcType="VARCHAR" property="loginName" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
-    <result column="role" jdbcType="INTEGER" property="role" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId" />
+    <result column="pic" jdbcType="VARCHAR" property="pic" />
+    <result column="register_time" jdbcType="TIMESTAMP" property="registerTime" />
+    <result column="create_by" jdbcType="INTEGER" property="createBy" />
+    <result column="admin_status" jdbcType="INTEGER" property="adminStatus" />
   </resultMap>
 </mapper>

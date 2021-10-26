@@ -1,5 +1,8 @@
 package com.admin.provider.model;
 
+import com.alibaba.excel.annotation.ExcelProperty;
+import com.alibaba.excel.annotation.write.style.ColumnWidth;
+
 import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.*;
@@ -8,41 +11,53 @@ import javax.persistence.*;
 public class SysLog {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ExcelProperty(index = 0)
     private Integer id;
 
     /**
      * 操作人ID
      */
     @Column(name = "user_id")
+    @ExcelProperty(index = 1)
     private Integer userId;
 
     /**
      * 操作人项目
      */
+    @ColumnWidth(20)
+    @ExcelProperty(value="管理员名",index = 2)
     @Column(name = "user_name")
     private String userName;
 
     /**
      * 操作名称
      */
+    @ColumnWidth(20)
+    @ExcelProperty(value="操作方法",index = 3)
     @Column(name = "operation_name")
     private String operationName;
 
     /**
      * 操作人IP地址
      */
+    @ColumnWidth(20)
+    @ExcelProperty(value="IP地址",index = 4)
     @Column(name = "user_ip")
     private String userIp;
 
     /**
      * 记录时间
      */
+    @ColumnWidth(20)
+    @ExcelProperty(value="操作时间",index = 5)
     @Column(name = "log_time")
     private LocalDateTime logTime;
 
     /**
      * 操作参数
      */
+    @ColumnWidth(80)
+    @ExcelProperty(value="操作参数",index = 6)
     @Column(name = "operation_param")
     private String operationParam;
 

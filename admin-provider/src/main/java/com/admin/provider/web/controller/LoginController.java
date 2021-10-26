@@ -1,6 +1,5 @@
 package com.admin.provider.web.controller;
 
-import com.admin.common.exception.ServiceException;
 import com.admin.common.result.Result;
 import com.admin.common.result.ResultBuilder;
 import com.admin.core.annotation.SysLog;
@@ -12,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 
 /**
  * 登陆管理
@@ -34,6 +34,7 @@ public class LoginController {
     public Result login(@RequestBody LoginReq req) throws Exception{
         //判断是否验证码是否输入正确
         String cacheVerifyCode = imgValidService.get(req.getValidKey());
+        ArrayList arrayList = new ArrayList<Integer>();
 //        if (!req.getVerifyCode().toLowerCase().equals(cacheVerifyCode)){
 //            throw new ServiceException("验证码输入错误,请重新输入!");
 //        }

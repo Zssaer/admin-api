@@ -53,6 +53,7 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
                 .addResourceLocations("classpath:/META-INF/resources/webjars/");
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/META-INF/resources/");
+
         //设置本地存储文件夹资源映射
         registry.addResourceHandler("/resources/**").addResourceLocations(this.getLocalstorageDir());
     }

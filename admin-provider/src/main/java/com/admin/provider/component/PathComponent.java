@@ -29,7 +29,7 @@ public class PathComponent {
      * @return 图片相对位置
      */
     public String getImgDbFileName(String fileName,String dataTime) {
-        String imgSavePath = configService.getSysconfig(IMG_SAVE_PATH);
+        String imgSavePath = (String) configService.getConfig(IMG_SAVE_PATH);
 
         if (StringUtils.isEmpty(imgSavePath)) {
             return DEFAULT_PIC_PATH + fileName;
@@ -47,7 +47,7 @@ public class PathComponent {
      * @return  附件相对位置
      */
     public String getFileDbFileName(String fileName,String dataTime) {
-        String fileSavePath = configService.getSysconfig(FILE_SAVE_PATH);
+        String fileSavePath = configService.getConfig(FILE_SAVE_PATH);
 
         if (StringUtils.isEmpty(fileSavePath)) {
             return DEFAULT_FILE_PATH + fileName;
@@ -60,7 +60,7 @@ public class PathComponent {
      * 获取本地存储文件夹前路径,用作本地路径映射到网络地址
      */
     public String getLocalStorageDir() {
-        return configService.getSysconfig("Local_Dir");
+        return configService.getConfig("Local_Dir");
     }
 
     /**
@@ -98,7 +98,7 @@ public class PathComponent {
      * @return String 文件绝对路径
      */
     public String getAccessUrl(String dbFileName) {
-        String webResourecesPath = configService.getSysconfig(WEB_RESOURECES_PATH);
+        String webResourecesPath = configService.getConfig(WEB_RESOURECES_PATH);
         if (StringUtils.isEmpty(dbFileName)) {
             dbFileName = DEFAULT_PIC_PATH+DEFAULT_PIC;
         }

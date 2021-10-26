@@ -11,6 +11,12 @@ public class Config {
     private Integer id;
 
     /**
+     * 配置组id
+     */
+    @Column(name = "group_id")
+    private Integer groupId;
+
+    /**
      * 配置Key
      */
     @Column(name = "config_key")
@@ -23,10 +29,16 @@ public class Config {
     private String configValue;
 
     /**
-     * 是否系统内置配置
+     * 是否系统内置配置(0:不是,1:是)
      */
     @Column(name = "is_sys")
     private Integer isSys;
+
+    /**
+     * 配置状态(0:关闭,1:开启)
+     */
+    @Column(name = "status")
+    private Integer status;
 
     /**
      * @return id
@@ -74,5 +86,21 @@ public class Config {
      */
     public void setIsSys(Integer isSys) {
         this.isSys = isSys;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
     }
 }

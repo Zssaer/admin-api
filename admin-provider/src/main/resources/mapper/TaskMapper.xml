@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.provider.web.mapper.TaskMapper">
+  <resultMap id="BaseResultMap" type="com.admin.provider.model.Task">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="task_name" jdbcType="VARCHAR" property="taskName" />
+    <result column="task_job_key" jdbcType="VARCHAR" property="taskJobKey" />
+    <result column="task_description" jdbcType="VARCHAR" property="taskDescription" />
+    <result column="task_cron" jdbcType="VARCHAR" property="taskCron" />
+    <result column="task_class" jdbcType="VARCHAR" property="taskClass" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="createdBy" jdbcType="VARCHAR" property="createdby" />
+    <result column="task_data" jdbcType="LONGVARCHAR" property="taskData" />
+  </resultMap>
+</mapper>

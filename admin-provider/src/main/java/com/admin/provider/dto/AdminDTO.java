@@ -1,6 +1,7 @@
 package com.admin.provider.dto;
 
 import com.alibaba.fastjson.JSON;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.util.List;
 
@@ -10,10 +11,15 @@ import java.util.List;
  * @time: 2021/8/27 14:23
  */
 public class AdminDTO {
+    @ApiModelProperty(value = "管理员登录名", dataType = "String")
     private String loginName;
-    private Integer role;
+    @ApiModelProperty(value = "管理员角色id", dataType = "Integer")
+    private Integer roleId;
+    @ApiModelProperty(value = "管理员权限", dataType = "List")
     private List<String> permission;
+    @ApiModelProperty(value = "Token名称", dataType = "String")
     private String tokenName;
+    @ApiModelProperty(value = "Token值", dataType = "String")
     private String tokenValue;
 
     public String getTokenName() {
@@ -48,12 +54,12 @@ public class AdminDTO {
         this.loginName = loginName;
     }
 
-    public Integer getRole() {
-        return role;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    public void setRole(Integer role) {
-        this.role = role;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
     @Override

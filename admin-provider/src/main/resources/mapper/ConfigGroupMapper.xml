@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.admin.provider.web.mapper.ConfigGroupMapper">
+  <resultMap id="BaseResultMap" type="com.admin.provider.model.ConfigGroup">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="group_name" jdbcType="VARCHAR" property="groupName" />
+    <result column="group_code" jdbcType="VARCHAR" property="groupCode" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="group_type" jdbcType="INTEGER" property="groupType" />
+  </resultMap>
+</mapper>

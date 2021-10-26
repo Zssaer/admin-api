@@ -5,7 +5,8 @@ import com.admin.provider.dto.MenuDTO;
 import com.admin.provider.model.Admin;
 import com.admin.provider.model.AdminPermission;
 import com.admin.provider.model.RolePermission;
-import com.admin.provider.vo.Meta;
+import com.admin.provider.vo.MenuTreeVO;
+import com.admin.provider.vo.MetaVO;
 import com.admin.provider.web.mapper.RolePermissionMapper;
 import com.admin.provider.web.service.AdminPermissionService;
 import com.admin.provider.web.service.AdminService;
@@ -43,7 +44,7 @@ public class RolePermissionServiceImpl extends AbstractService<RolePermission> i
         List<String> permissionMethodList = new ArrayList<>();
 
         Admin admin = adminService.findById(loginId);
-        Integer roleId = admin.getRole();
+        Integer roleId = admin.getRoleId();
         //获取角色权限表
         Condition rolePermissionCd = new Condition(RolePermission.class);
         rolePermissionCd.createCriteria().andEqualTo("roleId", roleId);
@@ -67,16 +68,87 @@ public class RolePermissionServiceImpl extends AbstractService<RolePermission> i
      * 根据用户ID来获取菜单列表
      * 用作管理端动态路由
      *
-     * @param adminId
      * @return
      */
     @Override
-    public List<MenuDTO> getMenu(Integer adminId) {
-        Admin admin = adminService.findById(adminId);
+    public List<MenuDTO> getMenuDto(Integer roleId) {
         Condition rolePermissionCdt = new Condition(RolePermission.class);
-        rolePermissionCdt.createCriteria().andEqualTo("roleId", admin.getRole());
+        rolePermissionCdt.createCriteria().andEqualTo("roleId", roleId);
         List<RolePermission> rolePermissionList = rolePermissionMapper.selectByCondition(rolePermissionCdt);
 
+        List<MenuDTO> list = fillMenu(rolePermissionList);
+        return list;
+    }
+
+    /**
+     * 获取所有菜单列表(用于分配菜单权限显示)
+     *
+     * @return
+     */
+    @Override
+    public List<MenuDTO> getAllMenuList() {
+        List<RolePermission> rolePermissions = rolePermissionMapper.selectAll();
+        List<MenuDTO> list = fillMenu(rolePermissions);
+        return list;
+    }
+
+    /**
+     * 获取角色的菜单列表树(用于分配菜单权限显示)
+     *
+     * @param roleId 角色id
+     * @return
+     */
+    @Override
+    public MenuTreeVO getMenuList(Integer roleId) {
+        //获取所有菜单(不考虑一级、二级)
+        Condition condition = new Condition(AdminPermission.class);
+        condition.createCriteria().andEqualTo("type", 1);
+        List<AdminPermission> menuList = permissionService.findByCondition(condition);
+
+        //获取所有一级菜单
+        Condition condition2 = new Condition(AdminPermission.class);
+        condition2.createCriteria().andEqualTo("type", 1);
+        List<AdminPermission> parentMenuList = permissionService.findByCondition(condition2);
+
+        //获取角色拥有的权限(权限包括菜单)
+        Condition con = new Condition(RolePermission.class);
+        con.createCriteria().andEqualTo("roleId", roleId);
+        List<RolePermission> list = rolePermissionMapper.selectByCondition(con);
+
+        //查询角色拥有的菜单ID,作为拥有菜单ID列表
+        List<Integer> hasMenuIdList = new ArrayList<Integer>();
+        for (RolePermission p : list) {
+            Integer permissionId = p.getPermissionId();
+            for (AdminPermission permission : menuList) {
+                if (permissionId.equals(permission.getId())) {
+                    hasMenuIdList.add(permissionId);
+                }
+            }
+        }
+        //查询拥有的父类菜单ID,作为展开菜单ID列表
+        List<Integer> parentMenuIdList = new ArrayList<Integer>();
+        for (RolePermission p : list) {
+            Integer permissionId = p.getPermissionId();
+            for (AdminPermission permission : parentMenuList) {
+                if (permissionId.equals(permission.getId())) {
+                    parentMenuIdList.add(permissionId);
+                }
+            }
+        }
+        //创建树,将其展开id列表和拥有id列表放入
+        MenuTreeVO menuTreeVO = new MenuTreeVO();
+        menuTreeVO.setCheckedIds(hasMenuIdList);
+        menuTreeVO.setExpandedIds(parentMenuIdList);
+        return menuTreeVO;
+    }
+
+    /**
+     * 拼装菜单
+     *
+     * @param rolePermissionList 角色权限列表
+     * @return
+     */
+    public List<MenuDTO> fillMenu(List<RolePermission> rolePermissionList) {
         List<MenuDTO> menuList = new ArrayList<>();
         for (RolePermission rolePermission : rolePermissionList) {
             //查询一级菜单
@@ -87,11 +159,12 @@ public class RolePermissionServiceImpl extends AbstractService<RolePermission> i
             if (!permissionList.isEmpty()) {
                 //组装菜单
                 MenuDTO menu = new MenuDTO();
+                menu.setId(permissionList.get(0).getId());
                 menu.setName(permissionList.get(0).getName());
                 menu.setPath("/" + permissionList.get(0).getPath());
                 menu.setComponent("LAYOUT");
                 menu.setPage(menu.getPath() + "/" + "Index.vue");
-                menu.setMeta(new Meta(permissionList.get(0).getName(), permissionList.get(0).getIcon()));
+                menu.setMeta(new MetaVO(permissionList.get(0).getName(), permissionList.get(0).getIcon()));
 
                 Condition childrenCdt = new Condition(AdminPermission.class);
                 childrenCdt.createCriteria().andEqualTo("pid", permissionList.get(0).getId()).andEqualTo("type", 1);
@@ -111,11 +184,12 @@ public class RolePermissionServiceImpl extends AbstractService<RolePermission> i
         List<MenuDTO> childMenuList = new ArrayList<>();
         for (AdminPermission permission : childList) {
             MenuDTO menu = new MenuDTO();
+            menu.setId(permission.getId());
             menu.setName(permission.getName());
-            menu.setPath(menuDTO.getPath()+"/"+ permission.getPath());
+            menu.setPath(menuDTO.getPath() + "/" + permission.getPath());
             // 子类菜单的访问路径为其父菜单路径下的 对于名称文件夹的index.vue文件
-            menu.setPage(menuDTO.getPath() + "/" + permission.getPath()  + "/" +  "Index.vue");
-            menu.setMeta(new Meta(permission.getName(), permission.getIcon()));
+            menu.setPage(menuDTO.getPath() + "/" + permission.getPath() + "/" + "Index.vue");
+            menu.setMeta(new MetaVO(permission.getName(), permission.getIcon()));
             childMenuList.add(menu);
         }
         menuDTO.setChildren(childMenuList);

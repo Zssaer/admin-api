@@ -17,5 +17,9 @@ public class ConfigKeyConstant {
     public static final String LOCAL_DIR ="Local_Dir";    //本地存储地址
     public static final String WEB_RESOURECES_PATH ="Web_Resoureces_Path";    //网页映射目录
 
+    public static final String IS_REDIS_CACHE ="Is_Redis_Cache";    //网页映射目录
+
+    public static final String NORMAL ="正常";
+
 
 }

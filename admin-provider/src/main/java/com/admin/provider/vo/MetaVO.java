@@ -5,7 +5,7 @@ package com.admin.provider.vo;
  * @author: Zhaotianyi
  * @time: 2021/9/1 15:40
  */
-public class Meta {
+public class MetaVO {
     /**
      * 菜单标题
      */
@@ -43,7 +43,7 @@ public class Meta {
         this.hideChildrenInMenu = hideChildrenInMenu;
     }
 
-    public Meta(String title, String icon) {
+    public MetaVO(String title, String icon) {
         this.title = title;
         this.icon = icon;
     }

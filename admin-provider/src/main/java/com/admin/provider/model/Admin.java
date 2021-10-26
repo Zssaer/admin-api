@@ -1,6 +1,9 @@
 package com.admin.provider.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * 管理员
@@ -10,14 +13,22 @@ public class Admin {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "login_name")
     private String loginName;
 
     private String password;
 
     private String salt;
 
-    private Integer role;
+    private Integer roleId;
+
+    private String pic;
+
+    private Integer adminStatus;
+
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime registerTime;
+
+    private Integer createBy;
 
     /**
      * @return id
@@ -75,17 +86,43 @@ public class Admin {
         this.salt = salt;
     }
 
-    /**
-     * @return role
-     */
-    public Integer getRole() {
-        return role;
+    public Integer getRoleId() {
+        return roleId;
     }
 
-    /**
-     * @param role
-     */
-    public void setRole(Integer role) {
-        this.role = role;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getPic() {
+        return pic;
+    }
+
+    public void setPic(String pic) {
+        this.pic = pic;
+    }
+
+    public Integer getAdminStatus() {
+        return adminStatus;
+    }
+
+    public void setAdminStatus(Integer adminStatus) {
+        this.adminStatus = adminStatus;
+    }
+
+    public LocalDateTime getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(LocalDateTime registerTime) {
+        this.registerTime = registerTime;
+    }
+
+    public Integer getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(Integer createBy) {
+        this.createBy = createBy;
     }
 }

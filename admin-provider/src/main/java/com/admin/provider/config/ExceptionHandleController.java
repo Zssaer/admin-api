@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.QueryTimeoutException;
 
-import org.springframework.data.redis.RedisConnectionFailureException;
+//import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -33,7 +33,7 @@ public class ExceptionHandleController {
     @ExceptionHandler(Exception.class)
     public Result exceptionHandle(Exception ex) {
         logger.error(ex.getMessage(),ex);
-        return ResultBuilder.failResult("后台错误,请前往服务器控制台查看问题!");
+        return ResultBuilder.failResult("请求错误,请前往服务器控制台查看问题!");
     }
 
     /**
@@ -87,11 +87,11 @@ public class ExceptionHandleController {
      * 数据库超时报错拦截
      * @return Result
      */
-    @ExceptionHandler(RedisConnectionFailureException.class)
-    public Result RedisFailHandle(Exception ex) {
-        logger.error(ex.getMessage(),ex);
-        return ResultBuilder.failResult("Redis服务连接错误,请确保Redis服务已开启!");
-    }
+//    @ExceptionHandler(RedisConnectionFailureException.class)
+//    public Result RedisFailHandle(Exception ex) {
+//        logger.error(ex.getMessage(),ex);
+//        return ResultBuilder.failResult("Redis服务连接错误,请确保Redis服务已开启!");
+//    }
 
     /**
      * API地址报错拦截

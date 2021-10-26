@@ -5,6 +5,7 @@ import com.admin.provider.web.controller.request.LoginReq;
 import com.admin.provider.dto.AdminDTO;
 import com.admin.provider.web.controller.request.RegisterReq;
 import com.admin.provider.web.controller.request.ResetReq;
+import org.quartz.SchedulerException;
 
 
 /**
@@ -14,6 +15,8 @@ public interface AdminService extends Service<Admin> {
     AdminDTO login(LoginReq req);
     String logout();
 
-    String register(RegisterReq req);
+    String register(RegisterReq req) throws SchedulerException;
     String reset(ResetReq req);
+
+    void postAdmin(String loginName,String password,Integer roleId);
 }

@@ -10,6 +10,7 @@ import java.util.Map;
  * Created by zty on 2021/08/27.
  */
 public interface ConfigService extends Service<Config> {
-    String getSysconfig(String key);
+    String getConfig(String key);
+    List<Config> getConfigList(String groupCode);
     boolean isRedisCache();
 }

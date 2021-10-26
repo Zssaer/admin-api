@@ -7,22 +7,25 @@ import com.admin.common.result.Result;
 import com.admin.common.result.ResultBuilder;
 import com.admin.core.annotation.SysLog;
 import com.admin.provider.model.AdminRole;
+import com.admin.provider.web.controller.response.AdminRoleResp;
 import com.admin.provider.web.service.AdminRoleService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 import tk.mybatis.mapper.entity.Condition;
 import tk.mybatis.mapper.entity.Example.Criteria;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 管理员角色管理
-* Created by zty on 2021/08/27.
-*/
+ * Created by zty on 2021/08/27.
+ */
 @RestController
 @RequestMapping("/admin/roles")
 @Api(tags = "管理员角色管理")
@@ -44,8 +47,8 @@ public class AdminRoleController {
     @SaCheckPermission("role-delete")
     @SysLog("删除管理员角色")
     public Result delete(@RequestParam(value = "ids") List<Integer> ids) {
-    	Condition con = new Condition(AdminRole.class);
-    	con.createCriteria().andIn("id", ids);
+        Condition con = new Condition(AdminRole.class);
+        con.createCriteria().andIn("id", ids);
         adminRoleService.deleteByCondition(con);
         return ResultBuilder.successResult();
     }
@@ -67,12 +70,19 @@ public class AdminRoleController {
         StpUtil.checkPermission("role-get");
 
         PageHelper.startPage(req.getPage(), req.getSize());
-        
+
         Condition con = new Condition(AdminRole.class);
         Criteria cri = con.createCriteria();
-        
-        List<AdminRole> list = adminRoleService.findByCondition(con);
 
-        return ResultBuilder.successResult(new PageInfo<AdminRole>(list));
+        List<AdminRole> list = adminRoleService.findByCondition(con);
+        ArrayList<AdminRoleResp> resps = new ArrayList<>();
+        for (AdminRole adminRole : list) {
+            AdminRoleResp resp = new AdminRoleResp();
+            BeanUtils.copyProperties(adminRole, resp);
+            resps.add(resp);
+        }
+        PageInfo info = new PageInfo<>(list);
+        info.setList(resps);
+        return ResultBuilder.successResult(info);
     }
 }
