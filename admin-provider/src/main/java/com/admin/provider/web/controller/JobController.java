@@ -2,7 +2,7 @@ package com.admin.provider.web.controller;
 
 import com.admin.common.result.Result;
 import com.admin.common.result.ResultBuilder;
-import com.admin.provider.job.SayHelloJobLogic;
+import com.admin.provider.job.RegisterAdminLogic;
 import com.admin.provider.model.TaskDefine;
 import com.admin.provider.web.service.QuartzJobService;
 import io.swagger.annotations.Api;
@@ -40,7 +40,7 @@ public class JobController {
                 "这是一个测试的 任务",       //定时任务 的描述
                 "0/2 * * * * ? ",           //定时任务 的cron表达式
                 null,
-                SayHelloJobLogic.class //定时任务 的具体执行逻辑
+                RegisterAdminLogic.class //定时任务 的具体执行逻辑
         );
         quartzJobService.scheduleJob(task);
         return ResultBuilder.successResult("start HelloWorld Job success!");
@@ -84,7 +84,7 @@ public class JobController {
                 "这是一个测试的 任务",  //定时任务 的描述
                 "0/5 * * * * ? ", //定时任务 的cron表达式
                 null,
-                SayHelloJobLogic.class //定时任务 的具体执行逻辑
+                RegisterAdminLogic.class //定时任务 的具体执行逻辑
         );
         if (quartzJobService.modifyJobCron(task))
             return ResultBuilder.successResult("modify HelloWorld Job Cron success!");

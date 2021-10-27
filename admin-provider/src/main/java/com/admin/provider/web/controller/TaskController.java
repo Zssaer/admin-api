@@ -45,10 +45,8 @@ public class TaskController {
     @ApiOperation(value = "删除定时任务", notes = "删除定时任务")
     @SaCheckPermission("task-delete")
     @SysLog("删除定时任务")
-    public Result delete(@RequestParam(value = "ids") List<Integer> ids) {
-        Condition con = new Condition(Task.class);
-        con.createCriteria().andIn("id", ids);
-        taskService.deleteByCondition(con);
+    public Result delete(@RequestParam(value = "ids") List<Integer> ids) throws SchedulerException {
+        taskService.deleteTasks(ids);
         return ResultBuilder.successResult();
     }
 

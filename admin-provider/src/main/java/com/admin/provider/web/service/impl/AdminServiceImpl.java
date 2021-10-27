@@ -6,12 +6,11 @@ import cn.dev33.satoken.stp.StpUtil;
 import com.admin.common.exception.ServiceException;
 import com.admin.common.utils.CronUtils;
 import com.admin.common.utils.MD5Utils;
-import com.admin.common.utils.UUIDUtils;
 import com.admin.common.utils.common.Md5Result;
 import com.admin.provider.component.ConfigComponent;
 import com.admin.provider.component.RolePermissionComponent;
-import com.admin.provider.job.SayHelloJobLogic;
-import com.admin.provider.model.TaskDefine;
+import com.admin.provider.job.RegisterAdminLogic;
+import com.admin.provider.vo.TaskVO;
 import com.admin.provider.web.controller.request.LoginReq;
 import com.admin.provider.dto.AdminDTO;
 import com.admin.provider.web.controller.request.RegisterReq;
@@ -22,8 +21,9 @@ import com.admin.provider.web.service.AdminService;
 import com.admin.common.service.AbstractService;
 import com.admin.provider.web.service.ConfigService;
 import com.admin.provider.web.service.QuartzJobService;
-import org.quartz.JobDataMap;
-import org.quartz.JobKey;
+import com.admin.provider.web.service.TaskService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.quartz.SchedulerException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +33,12 @@ import tk.mybatis.mapper.entity.Condition;
 
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.admin.provider.config.constant.QuartzConstant.EXACTLY_ONCE;
 
 
 /**
@@ -56,6 +57,9 @@ public class AdminServiceImpl extends AbstractService<Admin> implements AdminSer
     private ConfigComponent configComponent;
     @Resource
     private ConfigService configService;
+    @Resource
+    private TaskService taskService;
+
     /**
      * 管理员登陆
      *
@@ -139,25 +143,45 @@ public class AdminServiceImpl extends AbstractService<Admin> implements AdminSer
 
         //是否时定时任务
         if (req.getRegisterTime() != null) {
-            //转换时间为Cron表达式
-            String cron = CronUtils.getCron(req.getRegisterTime());
+            AdminDTO adminDTO = (AdminDTO) StpUtil.getSession().get("adminDTO");
+
             //装载注册数据
             Map<String, Object> data = new HashMap<>();
             data.put("LoginName", loginName);
             data.put("Password", req.getPassword());
             data.put("RoleId", req.getRoleId());
-            //设置定时任务
-            TaskDefine task = new TaskDefine(JobKey.jobKey(loginName + " Register", "GroupOne"),
-                    "这是一个" + loginName + "的定时注册任务",       //定时任务 的描述
-                    cron,           //定时任务 的cron表达式
-                    data,
-                    SayHelloJobLogic.class //定时任务 的具体执行逻辑
-            );
-            quartzJobService.scheduleJob(task);
+            data.put("CreatedBy", StpUtil.getLoginId());
+            data.put(EXACTLY_ONCE, 1);
+            ObjectMapper objectMapper = new ObjectMapper();
+            String s = "";
+            try {
+                s = objectMapper.writeValueAsString(data);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+
+            TaskVO taskVO = new TaskVO();
+            taskVO.setTaskName("定时注册用户任务");
+            taskVO.setJobKeyName(loginName + " Register");
+            taskVO.setJobKeyGroup("GroupOne");
+            taskVO.setTaskDescription("这是一个" + loginName + "的定时注册任务");
+            taskVO.setTaskCron(CronUtils.getCron(req.getRegisterTime()));
+            taskVO.setTaskData(s);
+            taskVO.setTaskClass(RegisterAdminLogic.class.getName());
+            taskVO.setStatus(1);
+            taskVO.setCreateTime(new Date());
+            taskVO.setCreatedby(adminDTO.getLoginName());
+            try {
+                taskService.saveTask(taskVO);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             return "定时注册设置成功!";
         }
 
-        postAdmin(loginName, req.getPassword(), req.getRoleId());
+        postAdmin(loginName, req.getPassword(), req.getRoleId(), (Integer) StpUtil.getLoginId());
         return "注册管理员账户成功!";
     }
 
@@ -184,7 +208,7 @@ public class AdminServiceImpl extends AbstractService<Admin> implements AdminSer
     }
 
 
-    public void postAdmin(String loginName, String password, Integer roleId) {
+    public void postAdmin(String loginName, String password, Integer roleId, Integer createdBy) {
         //明文密码随机加盐加密
         Md5Result md5AndSalt = MD5Utils.getSaltMd5AndSha(password);
         Admin admin = new Admin();
@@ -192,6 +216,9 @@ public class AdminServiceImpl extends AbstractService<Admin> implements AdminSer
         admin.setPassword(md5AndSalt.getResult());
         admin.setSalt(md5AndSalt.getSalt());
         admin.setRoleId(roleId);
+        admin.setAdminStatus(1);
+        admin.setCreateBy(createdBy);
+        admin.setRegisterTime(LocalDateTime.now());
         adminMapper.insert(admin);
     }
 }

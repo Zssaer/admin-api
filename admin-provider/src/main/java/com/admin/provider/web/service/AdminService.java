@@ -18,5 +18,5 @@ public interface AdminService extends Service<Admin> {
     String register(RegisterReq req) throws SchedulerException;
     String reset(ResetReq req);
 
-    void postAdmin(String loginName,String password,Integer roleId);
+    void postAdmin(String loginName,String password,Integer roleId,Integer createBy);
 }
