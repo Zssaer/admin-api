@@ -1,6 +1,26 @@
-# 项目排除路径
-/admin-common/target/
-/admin-core/target/
-/admin-provider/target/
-/.idea/
-/logs/
+/bin/
+target/
+logs/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
