@@ -85,7 +85,7 @@ public class AdminController {
         List<AdminResp> respList = new ArrayList<>();
         for (Admin admin : list) {
             AdminResp resp = new AdminResp();
-            BeanUtils.copyProperties(admin, req);
+            BeanUtils.copyProperties(admin, resp);
             resp.setAccessImage(pathComponent.getAccessUrl(admin.getPic()));
             respList.add(resp);
         }

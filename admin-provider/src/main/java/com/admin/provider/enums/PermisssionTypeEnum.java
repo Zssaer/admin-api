@@ -1,15 +1,16 @@
 package com.admin.provider.enums;
 
 /**
- * 配置组类型枚举
+ * 权限类型枚举
  */
-public enum ConfigGroupEnum {
-    SYSTEM(1, "系统配置"),
-    COMMON(2, "常用配置");
+public enum PermisssionTypeEnum {
+    MENU(1, "菜单权限"),
+    METHOD(2, "操作权限");
+
     private Integer code;
     private String desc;
 
-    ConfigGroupEnum(Integer code, String desc) {
+    PermisssionTypeEnum(Integer code, String desc) {
         this.code = code;
         this.desc = desc;
     }

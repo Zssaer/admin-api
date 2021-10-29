@@ -2,7 +2,6 @@ package com.admin.provider.web.controller;
 
 import cn.dev33.satoken.annotation.SaCheckLogin;
 import cn.dev33.satoken.annotation.SaCheckPermission;
-import cn.dev33.satoken.session.SaSession;
 import cn.dev33.satoken.stp.StpUtil;
 import com.admin.common.result.Result;
 import com.admin.common.result.ResultBuilder;
@@ -12,6 +11,7 @@ import com.admin.provider.dto.AdminDTO;
 import com.admin.provider.dto.MenuDTO;
 import com.admin.provider.model.RolePermission;
 import com.admin.provider.vo.MenuTreeVO;
+import com.admin.provider.web.controller.request.SaveRoleMenuReq;
 import com.admin.provider.web.controller.response.MenuListResp;
 import com.admin.provider.web.service.RolePermissionService;
 import com.github.pagehelper.PageHelper;
@@ -97,6 +97,15 @@ public class RolePermissionController {
         AdminDTO adminDTO = (AdminDTO) StpUtil.getSession().get("adminDTO");
         List<MenuDTO> menuDTOList = rolePermissionService.getMenuDto(adminDTO.getRoleId());
         return ResultBuilder.successResult(menuDTOList);
+    }
+
+    @PostMapping("/saveRoleMenu")
+    @ApiOperation(value = "修改角色权限菜单", notes = "修改角色权限菜单")
+    @SaCheckPermission("role-post")
+    @SysLog("修改角色权限菜单")
+    public Result getRoleMenuList(@RequestBody SaveRoleMenuReq req) {
+        rolePermissionService.saveRoleMenu(req);
+        return ResultBuilder.successResult();
     }
 
 }

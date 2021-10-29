@@ -3,6 +3,7 @@ import com.admin.provider.dto.MenuDTO;
 import com.admin.provider.model.RolePermission;
 import com.admin.common.service.Service;
 import com.admin.provider.vo.MenuTreeVO;
+import com.admin.provider.web.controller.request.SaveRoleMenuReq;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface RolePermissionService extends Service<RolePermission> {
 
     List<MenuDTO> getAllMenuList();
     MenuTreeVO getMenuList(Integer roleId);
+
+    void saveRoleMenu(SaveRoleMenuReq req);
 }

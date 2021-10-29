@@ -207,7 +207,13 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-            <version>2.5.2</version>
+            <version>${springboot.version}</version>
+        </dependency>
+        <!--SpringBoot热部署-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <version>${springboot.version}</version>
         </dependency>
     </dependencies>
 

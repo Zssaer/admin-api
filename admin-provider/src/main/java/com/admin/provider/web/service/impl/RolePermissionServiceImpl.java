@@ -2,11 +2,13 @@ package com.admin.provider.web.service.impl;
 
 import com.admin.common.service.AbstractService;
 import com.admin.provider.dto.MenuDTO;
+import com.admin.provider.enums.PermisssionTypeEnum;
 import com.admin.provider.model.Admin;
 import com.admin.provider.model.AdminPermission;
 import com.admin.provider.model.RolePermission;
 import com.admin.provider.vo.MenuTreeVO;
 import com.admin.provider.vo.MetaVO;
+import com.admin.provider.web.controller.request.SaveRoleMenuReq;
 import com.admin.provider.web.mapper.RolePermissionMapper;
 import com.admin.provider.web.service.AdminPermissionService;
 import com.admin.provider.web.service.AdminService;
@@ -36,8 +38,7 @@ public class RolePermissionServiceImpl extends AbstractService<RolePermission> i
     /**
      * 根据登录的用户id来获取权限
      *
-     * @param loginId
-     * @return
+     * @param loginId 登录id
      */
     @Override
     public List<String> getRolePermissionById(Integer loginId) {
@@ -68,7 +69,6 @@ public class RolePermissionServiceImpl extends AbstractService<RolePermission> i
      * 根据用户ID来获取菜单列表
      * 用作管理端动态路由
      *
-     * @return
      */
     @Override
     public List<MenuDTO> getMenuDto(Integer roleId) {
@@ -116,7 +116,7 @@ public class RolePermissionServiceImpl extends AbstractService<RolePermission> i
         List<RolePermission> list = rolePermissionMapper.selectByCondition(con);
 
         //查询角色拥有的菜单ID,作为拥有菜单ID列表
-        List<Integer> hasMenuIdList = new ArrayList<Integer>();
+        List<Integer> hasMenuIdList = new ArrayList<>();
         for (RolePermission p : list) {
             Integer permissionId = p.getPermissionId();
             for (AdminPermission permission : menuList) {
@@ -140,6 +140,47 @@ public class RolePermissionServiceImpl extends AbstractService<RolePermission> i
         menuTreeVO.setCheckedIds(hasMenuIdList);
         menuTreeVO.setExpandedIds(parentMenuIdList);
         return menuTreeVO;
+    }
+
+    @Override
+    public void saveRoleMenu(SaveRoleMenuReq req) {
+        Integer roleId = req.getRoleId();
+        List<Integer> menuIds = req.getMenuids();
+        //获取分配菜单下的功能权限ID
+        for (Integer id : menuIds) {
+            Condition condition = new Condition(AdminPermission.class);
+            condition.createCriteria().andEqualTo("pid", id).andEqualTo("type", PermisssionTypeEnum.METHOD.getCode());
+
+            List<AdminPermission> permissionList = permissionService.findByCondition(condition);
+            for (AdminPermission p : permissionList) {
+                Integer permissionId = p.getId();
+                menuIds.add(permissionId);
+            }
+        }
+
+        // 删除角色所有菜单权限,重新分配权限
+        Condition condition = new Condition(RolePermission.class);
+        condition.createCriteria().andEqualTo("roleId", roleId);
+        rolePermissionMapper.deleteByCondition(condition);
+
+        SavePer(roleId, menuIds);
+
+
+    }
+
+    /**
+     * 保存权限到角色权限表
+     */
+    private void SavePer(Integer roleId, List<Integer> menuIds) {
+        for (Integer permissionId : menuIds) {
+            RolePermission rolePermission = new RolePermission();
+            rolePermission.setId(0);
+            // 默认为能够使用
+            rolePermission.setIsUse(1);
+            rolePermission.setRoleId(roleId);
+            rolePermission.setPermissionId(permissionId);
+            rolePermissionMapper.insert(rolePermission);
+        }
     }
 
     /**
