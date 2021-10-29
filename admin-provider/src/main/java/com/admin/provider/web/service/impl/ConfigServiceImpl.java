@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 import static com.admin.provider.component.constant.ConfigKeyConstant.IS_REDIS_CACHE;
+import static com.admin.provider.component.constant.ConfigKeyConstant.STATUS_OFF;
 
 
 /**
@@ -39,7 +40,7 @@ public class ConfigServiceImpl extends AbstractService<Config> implements Config
         condition.createCriteria().andEqualTo("configKey", key);
         List<Config> configList = configMapper.selectByCondition(condition);
         if (configList.get(0).getStatus() == 0) {
-            return "Config's status is OFF";
+            return STATUS_OFF;
         }
         return configList.get(0).getConfigValue();
     }

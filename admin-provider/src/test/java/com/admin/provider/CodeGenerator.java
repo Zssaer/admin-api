@@ -50,7 +50,7 @@ public class CodeGenerator {
 
     public static void main(String[] args) {
 
-            genCode(new String[]{"sys_log"});
+            genCode(new String[]{"test"});
     }
     /**
      * 通过数据表名称生成代码，Model 名称通过解析数据表名称获得，下划线转大驼峰的形式。
@@ -98,7 +98,7 @@ public class CodeGenerator {
         context.setJdbcConnectionConfiguration(jdbcConnectionConfiguration);
 
         PluginConfiguration pluginConfiguration = new PluginConfiguration();
-        pluginConfiguration.setConfigurationType("tk.mybatis.mapper.generator.MapperPlugin");
+        pluginConfiguration.setConfigurationType("com.admin.provider.plugin.MapperPlugin");
 
         pluginConfiguration.addProperty("mappers", MAPPER_INTERFACE_REFERENCE);
         context.addPluginConfiguration(pluginConfiguration);
