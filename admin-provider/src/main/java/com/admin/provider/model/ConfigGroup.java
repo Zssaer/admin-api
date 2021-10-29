@@ -1,9 +1,14 @@
 package com.admin.provider.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 
+@ApiModel("配置组实体类")
 @Table(name = "config_group")
 public class ConfigGroup {
+    @ApiModelProperty("配置组id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -11,23 +16,27 @@ public class ConfigGroup {
     /**
      * 配置组名
      */
+    @ApiModelProperty("配置组名")
     @Column(name = "group_name")
     private String groupName;
 
     /**
      * 配置组代号
      */
+    @ApiModelProperty("配置组代号")
     @Column(name = "group_code")
     private String groupCode;
 
     /**
      * 状态(0:关闭,1:开启)
      */
+    @ApiModelProperty("状态(0:关闭,1:开启)")
     private Integer status;
 
     /**
      * 配置类型(1:系统配置,2:常用配置)
      */
+    @ApiModelProperty("配置类型(1:系统配置,2:常用配置)")
     private Integer groupType;
 
     /**

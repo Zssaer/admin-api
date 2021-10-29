@@ -1,11 +1,16 @@
 package com.admin.provider.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 
 /**
  * 配置信息
  */
+@ApiModel("配置实体类")
 public class Config {
+    @ApiModelProperty("配置id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -13,30 +18,35 @@ public class Config {
     /**
      * 配置组id
      */
+    @ApiModelProperty("配置组id")
     @Column(name = "group_id")
     private Integer groupId;
 
     /**
      * 配置Key
      */
+    @ApiModelProperty("配置Key")
     @Column(name = "config_key")
     private String configKey;
 
     /**
      * 配置Value
      */
+    @ApiModelProperty("配置Value")
     @Column(name = "config_value")
     private String configValue;
 
     /**
      * 是否系统内置配置(0:不是,1:是)
      */
+    @ApiModelProperty("是否系统内置配置(0:不是,1:是)")
     @Column(name = "is_sys")
     private Integer isSys;
 
     /**
      * 配置状态(0:关闭,1:开启)
      */
+    @ApiModelProperty("配置状态(0:关闭,1:开启)")
     @Column(name = "status")
     private Integer status;
 

@@ -1,9 +1,14 @@
 package com.admin.provider.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 
+@ApiModel("权限实体类")
 @Table(name = "admin_permission")
 public class AdminPermission {
+    @ApiModelProperty("权限id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -11,36 +16,43 @@ public class AdminPermission {
     /**
      * 父ID
      */
+    @ApiModelProperty("父类id")
     private Integer pid;
 
     /**
      * 权限名称
      */
+    @ApiModelProperty("权限名称")
     private String name;
 
     /**
      * 权限类型(1:菜单权限,2功能权限)
      */
+    @ApiModelProperty("权限类型(1:菜单权限,2功能权限)")
     private Integer type;
 
     /**
      * 权限路径/权限值
      */
+    @ApiModelProperty("权限路径/权限值")
     private String path;
 
     /**
      * 功能权限-请求类型
      */
+    @ApiModelProperty("功能权限-请求类型")
     private String method;
 
     /**
      * 菜单权限-菜单图标
      */
+    @ApiModelProperty("菜单权限-菜单图标")
     private String icon;
 
     /**
      * 菜单权限-排名
      */
+    @ApiModelProperty("菜单权限-排名")
     private Integer sort;
 
     /**

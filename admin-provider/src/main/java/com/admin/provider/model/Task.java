@@ -1,63 +1,76 @@
 package com.admin.provider.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import javax.persistence.*;
-
+@ApiModel("定时任务实体类")
 public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty("定时任务id")
     private Integer id;
 
     /**
      * 任务名称
      */
+    @ApiModelProperty("任务名称")
     @Column(name = "task_name")
     private String taskName;
 
     /**
      * 任务jobkey
      */
+    @ApiModelProperty("任务jobkey")
     @Column(name = "task_job_key")
     private String taskJobKey;
 
     /**
      * 任务描述
      */
+    @ApiModelProperty("任务描述")
     @Column(name = "task_description")
     private String taskDescription;
 
     /**
      * 任务cron表达式
      */
+    @ApiModelProperty("任务cron表达式")
     @Column(name = "task_cron")
     private String taskCron;
 
     /**
      * 任务执行类
      */
+    @ApiModelProperty("任务执行类")
     @Column(name = "task_class")
     private String taskClass;
 
     /**
      * 任务运行状态(0:关闭,1:执行)
      */
+    @ApiModelProperty("任务运行状态(0:关闭,1:执行)")
     private Integer status;
 
     /**
      * 创建时间
      */
+    @ApiModelProperty("创建时间")
     @Column(name = "create_time")
     private Date createTime;
 
     /**
      * 创建任务的管理员名称
      */
+    @ApiModelProperty("创建任务的管理员名称")
     @Column(name = "createdBy")
     private String createdby;
 
     /**
      * 任务传递数据
      */
+    @ApiModelProperty("任务传递数据")
     @Column(name = "task_data")
     private String taskData;
 

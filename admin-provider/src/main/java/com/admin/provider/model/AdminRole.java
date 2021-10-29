@@ -1,10 +1,14 @@
 package com.admin.provider.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 import javax.persistence.*;
-
+@ApiModel("角色实体类")
 @Table(name = "admin_role")
 public class AdminRole {
+    @ApiModelProperty("角色id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -12,18 +16,21 @@ public class AdminRole {
     /**
      * 角色名称
      */
+    @ApiModelProperty("角色名称")
     @Column(name = "role_name")
     private String roleName;
 
     /**
      * 是否系统内置
      */
+    @ApiModelProperty("是否系统内置")
     @Column(name = "is_sys")
     private Integer isSys;
 
     /**
      * 创建时间
      */
+    @ApiModelProperty("创建时间")
     @Column(name = "create_time")
     private Date createTime;
 

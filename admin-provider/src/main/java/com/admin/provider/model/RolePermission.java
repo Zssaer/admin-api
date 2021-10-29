@@ -1,9 +1,14 @@
 package com.admin.provider.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 
+@ApiModel("角色权限实体类")
 @Table(name = "role_permission")
 public class RolePermission {
+    @ApiModelProperty("角色权限id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -11,18 +16,21 @@ public class RolePermission {
     /**
      * 角色ID
      */
+    @ApiModelProperty("角色ID")
     @Column(name = "role_id")
     private Integer roleId;
 
     /**
      * 权限ID
      */
+    @ApiModelProperty("权限ID")
     @Column(name = "permission_id")
     private Integer permissionId;
 
     /**
      * 可否使用权限 0:不能 1可以
      */
+    @ApiModelProperty("可否使用权限 0:不能 1可以")
     @Column(name = "is_use")
     private Integer isUse;
 

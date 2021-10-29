@@ -1,5 +1,7 @@
 package com.admin.provider.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -8,26 +10,30 @@ import java.time.LocalDateTime;
 /**
  * 管理员
  */
+@ApiModel("管理员实体类")
 public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ApiModelProperty("管理员id")
     private Integer id;
-
+    @ApiModelProperty("管理员登录名")
     private String loginName;
-
+    @ApiModelProperty("管理员密码")
     private String password;
-
+    @ApiModelProperty("密码盐值")
     private String salt;
-
+    @ApiModelProperty("管理员角色id")
     private Integer roleId;
-
+    @ApiModelProperty("管理员头像")
     private String pic;
-
+    @ApiModelProperty("账户状态")
     private Integer adminStatus;
 
+    @ApiModelProperty("注册时间")
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime registerTime;
 
+    @ApiModelProperty("创建者id")
     private Integer createBy;
 
     /**

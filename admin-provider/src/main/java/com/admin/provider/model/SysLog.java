@@ -2,13 +2,17 @@ package com.admin.provider.model;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 import java.time.LocalDateTime;
 import java.util.Date;
 import javax.persistence.*;
 
+@ApiModel("系统日志实体类")
 @Table(name = "sys_log")
 public class SysLog {
+    @ApiModelProperty("日志id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ExcelProperty(index = 0)
@@ -17,6 +21,7 @@ public class SysLog {
     /**
      * 操作人ID
      */
+    @ApiModelProperty("操作人ID")
     @Column(name = "user_id")
     @ExcelProperty(index = 1)
     private Integer userId;
@@ -24,6 +29,7 @@ public class SysLog {
     /**
      * 操作人项目
      */
+    @ApiModelProperty("操作人项目")
     @ColumnWidth(20)
     @ExcelProperty(value="管理员名",index = 2)
     @Column(name = "user_name")
@@ -32,6 +38,7 @@ public class SysLog {
     /**
      * 操作名称
      */
+    @ApiModelProperty("操作名称")
     @ColumnWidth(20)
     @ExcelProperty(value="操作方法",index = 3)
     @Column(name = "operation_name")
@@ -40,6 +47,7 @@ public class SysLog {
     /**
      * 操作人IP地址
      */
+    @ApiModelProperty("操作人IP地址")
     @ColumnWidth(20)
     @ExcelProperty(value="IP地址",index = 4)
     @Column(name = "user_ip")
@@ -48,6 +56,7 @@ public class SysLog {
     /**
      * 记录时间
      */
+    @ApiModelProperty("记录时间")
     @ColumnWidth(20)
     @ExcelProperty(value="操作时间",index = 5)
     @Column(name = "log_time")
@@ -56,10 +65,12 @@ public class SysLog {
     /**
      * 操作参数
      */
+    @ApiModelProperty("操作参数")
     @ColumnWidth(80)
     @ExcelProperty(value="操作参数",index = 6)
     @Column(name = "operation_param")
     private String operationParam;
+
 
     public LocalDateTime getLogTime() {
         return logTime;
