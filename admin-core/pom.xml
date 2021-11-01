@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>admin-core</artifactId>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>
@@ -20,22 +21,29 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
+            <exclusions><!-- 去掉SpringBoot默认的logback配置 -->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+        <!-- saToken权限管理-->
         <dependency>
             <groupId>cn.dev33</groupId>
             <artifactId>sa-token-spring-boot-starter</artifactId>
         </dependency>
-<!--        &lt;!&ndash; Sa-Token整合Redis &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>cn.dev33</groupId>-->
-<!--            <artifactId>sa-token-dao-redis-jackson</artifactId>-->
-<!--        </dependency>-->
-<!--        &lt;!&ndash; 提供Redis连接池 &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.commons</groupId>-->
-<!--            <artifactId>commons-pool2</artifactId>-->
-<!--        </dependency>-->
-
+        <!--        &lt;!&ndash; Sa-Token整合Redis &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>cn.dev33</groupId>-->
+        <!--            <artifactId>sa-token-dao-redis-jackson</artifactId>-->
+        <!--        </dependency>-->
+        <!--        &lt;!&ndash; 提供Redis连接池 &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.apache.commons</groupId>-->
+        <!--            <artifactId>commons-pool2</artifactId>-->
+        <!--        </dependency>-->
+        <!-- commons工具包-->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -44,6 +52,7 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+        <!-- ehcache缓存工具-->
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
@@ -58,7 +67,7 @@
             <groupId>com.github.whvcse</groupId>
             <artifactId>easy-captcha</artifactId>
         </dependency>
-
+        <!-- excel工具-->
         <dependency>
             <groupId>com.pig4cloud.excel</groupId>
             <artifactId>excel-spring-boot-starter</artifactId>
@@ -66,7 +75,18 @@
 
 
 
-
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

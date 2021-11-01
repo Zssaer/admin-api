@@ -6,7 +6,7 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
-
+        <!-- INFO级别日志 -->
         <RollingRandomAccessFile name="InfoFile"
                                  fileName="${LOG_HOME}/info.log"
                                  filePattern="${LOG_HOME}/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log">
@@ -21,7 +21,7 @@
             </Policies>
             <DefaultRolloverStrategy max="20" />
         </RollingRandomAccessFile>
-
+        <!-- Error级别日志 -->
         <RollingRandomAccessFile name="ErrorFile"
                                  fileName="${LOG_HOME}/error.log"
                                  filePattern="${LOG_HOME}/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log">
@@ -36,7 +36,7 @@
             </Policies>
             <DefaultRolloverStrategy max="20" />
         </RollingRandomAccessFile>
-
+        <!-- Fatal级别日志 -->
         <RollingRandomAccessFile name="FatalFile"
                                  fileName="${LOG_HOME}/fatal.log"
                                  filePattern="${LOG_HOME}/$${date:yyyy-MM}/fatal-%d{yyyy-MM-dd}-%i.log">

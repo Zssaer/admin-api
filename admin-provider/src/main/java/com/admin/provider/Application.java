@@ -10,7 +10,11 @@ import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 
 import javax.annotation.Resource;
+import java.awt.*;
+import java.io.IOException;
 import java.net.InetAddress;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 
 /**
@@ -24,18 +28,9 @@ public class Application implements WebServerFactoryCustomizer<ConfigurableWebSe
     private ConfigComponent configComponent;
     public static int port = 0;
 
-    private static final Log logger = LogFactory.getLog(Application.class);
-
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
-        InetAddress address = null;
-        try {
-            address = InetAddress.getLocalHost();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
 
-        logger.info("API接口测试平台:" + address.getHostAddress() + ":" + port + "/doc.html");
     }
 
     @Override

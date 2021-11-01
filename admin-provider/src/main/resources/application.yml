@@ -5,8 +5,10 @@ server:
 logging:
   #log4j配置文件
   config: classpath:log4j.xml
-
 spring:
+  freemarker:
+    # 关闭freemarker模板自动检查
+    check-template-location: false
   profiles:
     #项目运行环境
     active: dev

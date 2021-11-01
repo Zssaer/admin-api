@@ -1,5 +1,6 @@
 package com.admin.provider.component;
 
+import com.admin.common.utils.NetUtils;
 import com.admin.provider.web.service.ConfigService;
 import com.alibaba.druid.util.StringUtils;
 import org.slf4j.Logger;
@@ -7,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -25,9 +27,7 @@ public class ConfigComponent {
     private ConfigService configService;
 
     /**
-     * 获取服务器地址
-     *
-     * @return
+     * 获取服务器地址,如果没有指定或者正确配置端口, 则随机生成一个可用的端口
      */
     public Integer getAddress() {
         String port = configService.getConfig(SERVER_PORT);
@@ -35,15 +35,31 @@ public class ConfigComponent {
 
         Matcher isNum = pattern.matcher(port);
         if (!isNum.matches() || StringUtils.isEmpty(port)) {
-            log.error("自定义端口配置失败,项目默认端口启动,现将项目以默认端口启动");
-            return 8085;
+            log.error("自定义端口配置失败,项目默认端口启动,现将项目以随机端口启动");
+            return getRandomPort();
         }
         if (Integer.parseInt(port) < 1024 || Integer.parseInt(port) > 65535) {
-            log.error("自定义端口配置不在用户端口范围中,请将其设置在1024-65535之间,现将项目以默认端口启动");
-            return 8085;
+            log.error("自定义端口配置不在用户端口范围中,请将其设置在1024-65535之间,现将项目以随机端口启动");
+            return getRandomPort();
         }
-        ;
+
         return Integer.parseInt(port);
+    }
+
+    /**
+     * 随机生成一个可用的端口
+     */
+    public static int getRandomPort() {
+        int max = 65535;
+        int min = 2000;
+        Random random = new Random();
+        int port = random.nextInt(max) % (max - min + 1) + min;
+        boolean using = NetUtils.isLoclePortUsing(port);
+        if (using) {
+            return port;
+        } else {
+            return getRandomPort();
+        }
     }
 
 
