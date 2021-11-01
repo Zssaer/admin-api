@@ -11,7 +11,7 @@
  Target Server Version : 80023
  File Encoding         : 65001
 
- Date: 29/10/2021 17:49:47
+ Date: 01/11/2021 17:33:03
 */
 
 SET NAMES utf8mb4;
@@ -32,7 +32,7 @@ CREATE TABLE `admin`  (
   `admin_status` int(0) NOT NULL DEFAULT 1 COMMENT '管理员状态',
   `create_by` int(0) NOT NULL COMMENT '创建者',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1007 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1006 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of admin
@@ -53,7 +53,7 @@ CREATE TABLE `admin_permission`  (
   `icon` varchar(90) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '菜单权限-菜单图标',
   `sort` int(0) NULL DEFAULT NULL COMMENT '菜单权限-排名',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1024 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1023 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of admin_permission
@@ -127,7 +127,14 @@ INSERT INTO `config` VALUES (4, 1, 'Web_Resoureces_Path', 'http://192.168.0.190:
 INSERT INTO `config` VALUES (5, 3, 'Is_Redis_Cache', '0', 1, 1);
 INSERT INTO `config` VALUES (6, 2, '新闻', 'new', 1, 1);
 INSERT INTO `config` VALUES (7, 2, '通告', 'notice', 0, 1);
-INSERT INTO `config` VALUES (11, 1, 'Server_Port', '99958', 1, 1);
+INSERT INTO `config` VALUES (11, 3, 'Server_Port', '8085', 1, 1);
+INSERT INTO `config` VALUES (12, 3, 'Is_Oss_Server', '0', 1, 1);
+INSERT INTO `config` VALUES (13, 4, 'Domain', 'https://zssaer.oss-cn-chengdu.aliyuncs.com', 1, 1);
+INSERT INTO `config` VALUES (14, 4, 'Endpoint', 'oss-cn-chengdu.aliyuncs.com', 1, 1);
+INSERT INTO `config` VALUES (15, 4, 'AccessKeyId', 'xxxxxxxxxxxxxx', 1, 1);
+INSERT INTO `config` VALUES (16, 4, 'AccessKeySecret', 'xxxxxxxxx', 1, 1);
+INSERT INTO `config` VALUES (17, 4, 'BucketName', 'zssaer', 1, 1);
+INSERT INTO `config` VALUES (20, 4, 'Personal', '0', 1, 1);
 
 -- ----------------------------
 -- Table structure for config_group
@@ -140,14 +147,15 @@ CREATE TABLE `config_group`  (
   `status` int(0) NOT NULL COMMENT '状态(0:关闭,1:开启)',
   `group_type` int(0) NOT NULL COMMENT '配置类型(1:系统配置,2:常用配置)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '配置组表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '配置组表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of config_group
 -- ----------------------------
 INSERT INTO `config_group` VALUES (1, '存储路径', 'savePath', 1, 1);
 INSERT INTO `config_group` VALUES (2, '文章类型', 'articleType', 1, 2);
-INSERT INTO `config_group` VALUES (3, '缓存服务器', 'cacheServer', 1, 1);
+INSERT INTO `config_group` VALUES (3, '服务器设置', 'cacheServer', 1, 1);
+INSERT INTO `config_group` VALUES (4, 'OSS设置', 'OssSetting', 1, 1);
 
 -- ----------------------------
 -- Table structure for role_permission
@@ -159,7 +167,7 @@ CREATE TABLE `role_permission`  (
   `permission_id` int(0) NOT NULL COMMENT '权限ID',
   `is_use` int(0) NOT NULL DEFAULT 1 COMMENT '可否使用权限 0:不能 1可以',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 108 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 107 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of role_permission
@@ -185,7 +193,7 @@ CREATE TABLE `sys_log`  (
   `user_ip` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '操作管理员IP地址',
   `log_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '日志时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 123 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_log
@@ -207,7 +215,7 @@ CREATE TABLE `task`  (
   `create_time` timestamp(0) NOT NULL COMMENT '创建时间',
   `createdBy` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '创建任务的管理员名称',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '任务管理类' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_bin COMMENT = '任务管理类' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of task

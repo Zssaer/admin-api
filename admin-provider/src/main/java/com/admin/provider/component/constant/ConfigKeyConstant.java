@@ -22,6 +22,17 @@ public class ConfigKeyConstant {
     public static final String SERVER_PORT ="Server_Port";    //项目启动端口号
     public static final String IS_REDIS_CACHE ="Is_Redis_Cache";    //是否启动Redis缓存存储
 
+    public static final String IS_OSS_SERVER ="Is_Oss_Server";    //是否启动OSS存储
+
+    public static final String DOMAIN ="Domain";    //OSS配置中的Domain
+    public static final String ENDPOINT ="Endpoint";    //OSS配置中的Endpoint
+    public static final String ACCESSKEYID ="AccessKeyId";    //OSS配置中的AccessKeyId
+    public static final String ACCESSKEYSECRET ="AccessKeySecret";    //OSS配置中的AccessKeySecret
+    public static final String BUCKETNAME ="BucketName";    //OSS配置中的BucketName
+    public static final String DISKIMAGE ="DiskImage";    //OSS配置中的DiskImage
+    public static final String DISKSOURCE ="DiskSource";    //OSS配置中的DiskSource
+    public static final String PERSONAL ="Personal";    //OSS配置中的Personal
+
 
 
 }

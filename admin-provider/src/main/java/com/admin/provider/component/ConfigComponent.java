@@ -12,6 +12,7 @@ import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.admin.provider.component.constant.ConfigKeyConstant.IS_OSS_SERVER;
 import static com.admin.provider.component.constant.ConfigKeyConstant.SERVER_PORT;
 
 
@@ -62,5 +63,19 @@ public class ConfigComponent {
         }
     }
 
+    /**
+     * 是否使用OSS服务
+     * @return
+     */
+    public boolean isOssServer() {
+        String config = configService.getConfig(IS_OSS_SERVER);
+        Pattern pattern = Pattern.compile("^[-+]?(([0-9]+)([.]([0-9]+))?|([.]([0-9]+))?)$");
 
+        Matcher isNum = pattern.matcher(config);
+        if (isNum.matches()) {
+            return Integer.parseInt(config) == 1 ? true : false;
+        } else {
+            return false;
+        }
+    }
 }
