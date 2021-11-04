@@ -4,7 +4,7 @@
 
 ## 🔥项目特点 
 
-1. 框架集成JavaWeb开发常见功能：`文件上传`、`角色授权`、`全局异常处理`、`redis控制台`、`API日志统计`、`全局配置`、`跨域处理` 等等..
+1. 框架集成JavaWeb开发常见功能：`文件上传`、`角色授权`、`全局异常处理`、`redis控制台`、`API日志统计`、`全局配置`、`跨域处理`、'定时操作' 等等..
 
 2. 内置MVC代码生成器。
 
@@ -25,4 +25,7 @@
   - Druid
   - Easy-Captcha
   - Ehcache
+  - oss
+  - excel-spring-boot-starter
+  - quartz
 
