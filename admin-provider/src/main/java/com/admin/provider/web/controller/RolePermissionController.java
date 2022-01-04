@@ -8,6 +8,7 @@ import com.admin.common.result.ResultBuilder;
 import com.admin.common.page.PageReq;
 import com.admin.core.annotation.SysLog;
 import com.admin.provider.dto.AdminDTO;
+import com.admin.provider.dto.AllMenuDTO;
 import com.admin.provider.dto.MenuDTO;
 import com.admin.provider.model.RolePermission;
 import com.admin.provider.vo.MenuTreeVO;
@@ -84,7 +85,7 @@ public class RolePermissionController {
     @SaCheckPermission("role-get")
     @SysLog("获取角色菜单分配列表")
     public Result getRoleMenuList(@RequestParam(value = "roleId") Integer roleId) {
-        List<MenuDTO> allMenuList = rolePermissionService.getAllMenuList();
+        List<AllMenuDTO> allMenuList = rolePermissionService.getAllMenuList();
         MenuTreeVO menuTree = rolePermissionService.getMenuList(roleId);
         return ResultBuilder.successResult(new MenuListResp(allMenuList, menuTree));
 

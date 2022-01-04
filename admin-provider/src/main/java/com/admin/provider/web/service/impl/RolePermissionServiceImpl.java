@@ -1,6 +1,7 @@
 package com.admin.provider.web.service.impl;
 
 import com.admin.common.service.AbstractService;
+import com.admin.provider.dto.AllMenuDTO;
 import com.admin.provider.dto.MenuDTO;
 import com.admin.provider.enums.PermisssionTypeEnum;
 import com.admin.provider.model.Admin;
@@ -19,7 +20,11 @@ import tk.mybatis.mapper.entity.Condition;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static java.awt.SystemColor.menu;
 
 
 /**
@@ -86,10 +91,33 @@ public class RolePermissionServiceImpl extends AbstractService<RolePermission> i
      * @return
      */
     @Override
-    public List<MenuDTO> getAllMenuList() {
-        List<RolePermission> rolePermissions = rolePermissionMapper.selectAll();
-        List<MenuDTO> list = fillMenu(rolePermissions);
-        return list;
+    public List<AllMenuDTO> getAllMenuList() {
+        Condition condition = new Condition(AdminPermission.class);
+        condition.createCriteria().andEqualTo("type",1).andIsNull("pid");
+        List<AdminPermission> permissions = permissionService.findByCondition(condition);
+
+
+        List<AllMenuDTO> allMenuDTOS = new ArrayList<>();
+        for (AdminPermission permission:permissions) {
+            AllMenuDTO allMenuDTO = new AllMenuDTO();
+            allMenuDTO.setId(permission.getId());
+            allMenuDTO.setLabel(permission.getName());
+            ArrayList<AllMenuDTO> childList = new ArrayList<>();
+            /** 查询子菜单并组装 **/
+            condition.clear();
+            condition.createCriteria().andEqualTo("type",1).andEqualTo("pid",permission.getId());
+            List<AdminPermission> childPermissions = permissionService.findByCondition(condition);
+            for (AdminPermission childPermission:childPermissions) {
+                AllMenuDTO child = new AllMenuDTO();
+                child.setId(permission.getId());
+                child.setLabel(permission.getName());
+                childList.add(child);
+            }
+            allMenuDTO.setChildren(childList);
+            allMenuDTOS.add(allMenuDTO);
+        }
+
+        return allMenuDTOS;
     }
 
     /**
@@ -125,6 +153,7 @@ public class RolePermissionServiceImpl extends AbstractService<RolePermission> i
                 }
             }
         }
+
         //查询拥有的父类菜单ID,作为展开菜单ID列表
         List<Integer> parentMenuIdList = new ArrayList<Integer>();
         for (RolePermission p : list) {
@@ -146,15 +175,17 @@ public class RolePermissionServiceImpl extends AbstractService<RolePermission> i
     public void saveRoleMenu(SaveRoleMenuReq req) {
         Integer roleId = req.getRoleId();
         List<Integer> menuIds = req.getMenuids();
+        ArrayList<Integer> newMenuIds = new ArrayList<>();
         //获取分配菜单下的功能权限ID
         for (Integer id : menuIds) {
+            newMenuIds.add(id);
             Condition condition = new Condition(AdminPermission.class);
             condition.createCriteria().andEqualTo("pid", id).andEqualTo("type", PermisssionTypeEnum.METHOD.getCode());
 
             List<AdminPermission> permissionList = permissionService.findByCondition(condition);
             for (AdminPermission p : permissionList) {
                 Integer permissionId = p.getId();
-                menuIds.add(permissionId);
+                newMenuIds.add(permissionId);
             }
         }
 
@@ -163,7 +194,7 @@ public class RolePermissionServiceImpl extends AbstractService<RolePermission> i
         condition.createCriteria().andEqualTo("roleId", roleId);
         rolePermissionMapper.deleteByCondition(condition);
 
-        SavePer(roleId, menuIds);
+        SavePer(roleId, newMenuIds);
 
 
     }

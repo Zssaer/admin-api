@@ -1,4 +1,5 @@
 package com.admin.provider.web.service;
+import com.admin.provider.dto.AllMenuDTO;
 import com.admin.provider.dto.MenuDTO;
 import com.admin.provider.model.RolePermission;
 import com.admin.common.service.Service;
@@ -16,7 +17,7 @@ public interface RolePermissionService extends Service<RolePermission> {
 
     List<MenuDTO> getMenuDto(Integer roleId);
 
-    List<MenuDTO> getAllMenuList();
+    List<AllMenuDTO> getAllMenuList();
     MenuTreeVO getMenuList(Integer roleId);
 
     void saveRoleMenu(SaveRoleMenuReq req);

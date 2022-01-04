@@ -1,5 +1,6 @@
 package com.admin.provider.web.controller.response;
 
+import com.admin.provider.dto.AllMenuDTO;
 import com.admin.provider.dto.MenuDTO;
 import com.admin.provider.vo.MenuTreeVO;
 
@@ -11,19 +12,19 @@ import java.util.List;
  * @time: 2021/10/25 16:57
  */
 public class MenuListResp {
-    private List<MenuDTO> allMenuList; // 所有菜单列表
+    private List<AllMenuDTO> allMenuList; // 所有菜单列表
     private MenuTreeVO menuTree;   // 角色拥有菜单树
 
-    public MenuListResp(List<MenuDTO> allMenuList, MenuTreeVO menuTree) {
+    public MenuListResp(List<AllMenuDTO> allMenuList, MenuTreeVO menuTree) {
         this.allMenuList = allMenuList;
         this.menuTree = menuTree;
     }
 
-    public List<MenuDTO> getAllMenuList() {
+    public List<AllMenuDTO> getAllMenuList() {
         return allMenuList;
     }
 
-    public void setAllMenuList(List<MenuDTO> allMenuList) {
+    public void setAllMenuList(List<AllMenuDTO> allMenuList) {
         this.allMenuList = allMenuList;
     }
 
