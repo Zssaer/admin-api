@@ -109,8 +109,8 @@ public class RolePermissionServiceImpl extends AbstractService<RolePermission> i
             List<AdminPermission> childPermissions = permissionService.findByCondition(condition);
             for (AdminPermission childPermission:childPermissions) {
                 AllMenuDTO child = new AllMenuDTO();
-                child.setId(permission.getId());
-                child.setLabel(permission.getName());
+                child.setId(childPermission.getId());
+                child.setLabel(childPermission.getName());
                 childList.add(child);
             }
             allMenuDTO.setChildren(childList);
