@@ -1,21 +1,14 @@
 package com.admin.provider;
 
 import com.admin.provider.component.ConfigComponent;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.server.ConfigurableWebServerFactory;
 import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 
 import javax.annotation.Resource;
-import java.awt.*;
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.UnknownHostException;
 
 /**
  * @description: 启动类
@@ -24,6 +17,7 @@ import java.net.UnknownHostException;
  */
 @SpringBootApplication(scanBasePackages = {"com.admin.provider", "com.admin.core"})
 public class Application implements WebServerFactoryCustomizer<ConfigurableWebServerFactory> {
+    private static final Logger logger = LoggerFactory.getLogger(Application.class);
     @Resource
     private ConfigComponent configComponent;
     public static int port = 0;
@@ -31,8 +25,9 @@ public class Application implements WebServerFactoryCustomizer<ConfigurableWebSe
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
 
-    }
 
+    }
+    
     @Override
     public void customize(ConfigurableWebServerFactory factory) {
         port = configComponent.getAddress();

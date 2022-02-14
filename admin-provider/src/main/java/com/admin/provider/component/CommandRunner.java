@@ -35,7 +35,7 @@ public class CommandRunner implements CommandLineRunner {
             e.printStackTrace();
         }
         String url = address.getHostAddress() + ":" + port + "/doc.html";
-        CmdUtil.executeCommandAndGetLines("cmd /c start http://" + url);
+//        CmdUtil.executeCommandAndGetLines("cmd /c start http://" + url);
         logger.info("API接口测试平台:" + url);
     }
 }

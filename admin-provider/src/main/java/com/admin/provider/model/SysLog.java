@@ -2,6 +2,7 @@ package com.admin.provider.model;
 
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
+import com.alibaba.excel.annotation.write.style.ContentStyle;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -32,6 +33,7 @@ public class SysLog {
     @ApiModelProperty("操作人项目")
     @ColumnWidth(20)
     @ExcelProperty(value="管理员名",index = 2)
+
     @Column(name = "user_name")
     private String userName;
 

@@ -3,6 +3,7 @@ package com.admin.provider.web.controller;
 import com.admin.common.result.Result;
 import com.admin.common.result.ResultBuilder;
 import com.admin.common.utils.MD5Utils;
+import com.admin.core.annotation.RateLimiter;
 import com.admin.provider.cache.ImgValidService;
 import com.admin.provider.web.controller.response.CaptchaResp;
 import com.wf.captcha.SpecCaptcha;
@@ -26,6 +27,7 @@ public class CaptchaController {
     private ImgValidService imgValidService;
 
     @ResponseBody
+    @RateLimiter(value = 1.0)
     @GetMapping("/captcha")
     @ApiOperation(value = "获取图像验证码",notes = "获取图像验证码")
     public Result captcha() throws Exception {
