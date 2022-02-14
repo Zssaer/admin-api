@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.core.annotation.AnnotationUtils;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
@@ -21,6 +22,7 @@ import java.util.concurrent.ConcurrentMap;
  */
 @Aspect
 @Component
+@Order(1)
 public class RateLimiterAspect {
     /**
      * 单机缓存

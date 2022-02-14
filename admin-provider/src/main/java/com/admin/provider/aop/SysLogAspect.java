@@ -22,6 +22,7 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.aspectj.lang.reflect.SourceLocation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -40,6 +41,7 @@ import java.util.Date;
  */
 @Aspect
 @Component
+@Order(2)
 public class SysLogAspect {
     private Log logger = LogFactory.getLog(this.getClass());
     @Autowired
