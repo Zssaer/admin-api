@@ -7,6 +7,36 @@ spring:
     url: jdbc:mysql://127.0.0.1/admin-api?useUnicode=true&characterEncoding=utf-8&useSSL=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      web-stat-filter:
+        # 启用 WebStatFilter
+        enabled: true
+        # 配置拦截规则
+        url-pattern: /*
+        # 排除一些不必要的 url，这些 URL 不会涉及到 SQL 查询
+        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+        # 开启 session 统计功能
+        session-stat-enable: true
+        # 缺省 sessionStatMaxCount 是 1000 个
+        session-stat-max-count: 1000
+      stat-view-servlet:
+        # 启用内置的监控页面
+        enabled: true
+        # 内置监控页面的地址
+        url-pattern: /druid/*
+        # 开启 Reset All 功能
+        reset-enable: true
+        # 设置登录用户
+        login-username: zssaer
+        login-password: 123456
+        # 白名单（如果allow没有配置或者为空，则允许所有访问）
+        allow: 127.0.0.1
+        # 黑名单（deny 优先于 allow，如果在 deny 列表中，就算在 allow 列表中，也会被拒绝）
+        deny:
+
+
+
+
 
 #  redis:
 #    database: 1
@@ -28,6 +58,7 @@ spring:
 #        max-idle: 10
 #        # 连接池中的最小空闲连接
 #        min-idle: 0
+
 
 server:
   servlet:
