@@ -24,6 +24,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 
 public class ExceptionHandleController {
     private static final Logger logger = LoggerFactory.getLogger(ExceptionHandleController.class);
+
     /**
      * 普通权限报错拦截
      *
@@ -32,19 +33,23 @@ public class ExceptionHandleController {
      */
     @ExceptionHandler(Exception.class)
     public Result exceptionHandle(Exception ex) {
-        logger.error(ex.getMessage(),ex);
+        logger.error(ex.getMessage(), ex);
         return ResultBuilder.failResult("请求错误,请前往服务器控制台查看问题!");
     }
 
     /**
      * 未登录账户报错
+     *
      * @return Result
      */
     @ExceptionHandler(NotLoginException.class)
     public Result notLoginexceptionHandle(Exception ex) {
-        logger.error(ex.getMessage(),ex);
-        if ("token已过期".equals(ex.getMessage())){
-            return ResultBuilder.failResult("账户信息已过期,请重新登录!");
+        logger.error(ex.getMessage(), ex);
+        switch (ex.getMessage()) {
+            case "token已被顶下线":
+                return ResultBuilder.failResult("账户以被其它地方登录,请重新登录!");
+            case "token已过期":
+                return ResultBuilder.failResult("账户信息已过期,请重新登录!");
         }
         return ResultBuilder.failResult("未登录账户,请登录后进行操作!");
     }
@@ -57,7 +62,7 @@ public class ExceptionHandleController {
      */
     @ExceptionHandler(ServiceException.class)
     public Result serviceExceptionHandle(Exception ex) {
-        logger.error(ex.getMessage(),ex);
+        logger.error(ex.getMessage(), ex);
         return ResultBuilder.failResult(ex.getMessage());
     }
 
@@ -68,7 +73,7 @@ public class ExceptionHandleController {
      */
     @ExceptionHandler(NotPermissionException.class)
     public Result notPermissionExceptionHandle(Exception ex) {
-        logger.error(ex.getMessage(),ex);
+        logger.error(ex.getMessage(), ex);
         return ResultBuilder.failResult("当前账户无权限进行此操作,请确保账户拥有该操作权限!");
     }
 
@@ -79,7 +84,7 @@ public class ExceptionHandleController {
      */
     @ExceptionHandler(QueryTimeoutException.class)
     public Result TimeoutHandle(Exception ex) {
-        logger.error(ex.getMessage(),ex);
+        logger.error(ex.getMessage(), ex);
         return ResultBuilder.failResult("数据库服务连接超时,请确保相关数据库服务已开启!");
     }
 
@@ -95,11 +100,12 @@ public class ExceptionHandleController {
 
     /**
      * API地址报错拦截
+     *
      * @return Result
      */
     @ExceptionHandler(NoHandlerFoundException.class)
     public Result notFindHandle(Exception ex) {
-        logger.error(ex.getMessage(),ex);
+        logger.error(ex.getMessage(), ex);
         return ResultBuilder.failResult("API调用地址错误");
     }
 }

@@ -6,6 +6,7 @@ import com.admin.core.annotation.SysLog;
 import com.admin.provider.cache.ImgValidService;
 import com.admin.provider.web.controller.request.LoginReq;
 import com.admin.provider.web.service.AdminService;
+import com.alibaba.druid.util.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -34,8 +35,11 @@ public class LoginController {
     public Result login(@RequestBody LoginReq req) throws Exception{
         //判断是否验证码是否输入正确
         String cacheVerifyCode = imgValidService.get(req.getValidKey());
-        ArrayList arrayList = new ArrayList<Integer>();
+//        if (StringUtils.isEmpty(cacheVerifyCode)){
+//            throw new ServiceException("请重新点击验证码，获取验证码。");
+//        }
 //        if (!req.getVerifyCode().toLowerCase().equals(cacheVerifyCode)){
+//            imgValidService.remove(req.getValidKey());
 //            throw new ServiceException("验证码输入错误,请重新输入!");
 //        }
         return ResultBuilder.successResult(adminService.login(req));
