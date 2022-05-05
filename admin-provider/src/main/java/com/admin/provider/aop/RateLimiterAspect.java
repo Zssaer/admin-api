@@ -50,7 +50,7 @@ public class RateLimiterAspect {
 
             // 尝试获取令牌
             if (RATE_LIMITER_CACHE.get(key) != null && !RATE_LIMITER_CACHE.get(key).tryAcquire(rateLimiter.timeout(), rateLimiter.timeUnit())) {
-                throw new ServiceException("手速太快了，慢点儿吧~");
+                throw new ServiceException("您的访问过于频繁,请稍后再试吧。");
             }
         }
         return point.proceed();
