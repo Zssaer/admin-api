@@ -1,5 +1,6 @@
 package com.admin.provider.web.controller.request;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
@@ -7,6 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @author: Zhaotianyi
  * @time: 2021/8/27 14:14
  */
+@ApiModel("登录请求类")
 public class LoginReq {
     @ApiModelProperty(value = "管理员登陆名", dataType = "String")
     private String loginName;

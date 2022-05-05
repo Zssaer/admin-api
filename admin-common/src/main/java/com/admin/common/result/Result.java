@@ -1,13 +1,19 @@
 package com.admin.common.result;
 
 import com.alibaba.fastjson.JSON;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 统一API Result封装
  */
+@ApiModel("返回结果")
 public class Result {
+    @ApiModelProperty("状态码")
     private int code;
+    @ApiModelProperty("结果信息")
     private String message;
+    @ApiModelProperty("返回数据")
     private Object data;
 
     public Result setCode(ResultCode resultCode) {

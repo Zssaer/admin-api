@@ -1,5 +1,8 @@
 package com.admin.provider.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
 /**
@@ -7,16 +10,27 @@ import java.util.Date;
  * @author: Zhaotianyi
  * @time: 2021/10/26 16:52
  */
+@ApiModel("任务请求类")
 public class TaskVO {
+    @ApiModelProperty("任务名称")
     private String taskName;
+    @ApiModelProperty("Job名称")
     private String JobKeyName;
+    @ApiModelProperty("Job组名")
     private String JobKeyGroup;
+    @ApiModelProperty("任务说明")
     private String taskDescription;
+    @ApiModelProperty("任务Cron表达式")
     private String taskCron;
+    @ApiModelProperty("任务类")
     private String taskClass;
+    @ApiModelProperty("任务状态")
     private Integer status;
+    @ApiModelProperty("创建时间")
     private Date createTime;
+    @ApiModelProperty("创建人")
     private String createdby;
+    @ApiModelProperty("任务数据")
     private String taskData;
 
     public String getTaskName() {

@@ -1,5 +1,6 @@
 package com.admin.provider.web.controller.request;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
  * @author: Zhaotianyi
  * @time: 2021/8/31 14:39
  */
+@ApiModel("注册请求类")
 public class RegisterReq {
     @ApiModelProperty(value = "管理员登陆名", dataType = "String")
     private String loginName;
