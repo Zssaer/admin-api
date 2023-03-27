@@ -140,7 +140,7 @@ public class AdminServiceImpl extends AbstractService<Admin> implements AdminSer
         Condition condition = new Condition(Admin.class);
         condition.createCriteria().andEqualTo("loginName", loginName);
         List<Admin> adminList = adminMapper.selectByCondition(condition);
-        if (!adminList.isEmpty()) {
+        if (!adminList.isEmpty() || !taskService.findListBy("taskJobKey", loginName + " Register;GroupOne").isEmpty()) {
             throw new ServiceException("输入登录名已经存在,请更换其他登录名!");
         }
 
@@ -183,8 +183,8 @@ public class AdminServiceImpl extends AbstractService<Admin> implements AdminSer
             }
             return "定时注册设置成功!";
         }
-
-        postAdmin(loginName, req.getPassword(), req.getRoleId(), (Integer) StpUtil.getLoginId());
+        System.out.println(StpUtil.getLoginId());
+        postAdmin(loginName, req.getPassword(), req.getRoleId(), Integer.valueOf(StpUtil.getLoginId().toString()));
         return "注册管理员账户成功!";
     }
 
@@ -211,6 +211,7 @@ public class AdminServiceImpl extends AbstractService<Admin> implements AdminSer
     }
 
 
+    @Override
     public void postAdmin(String loginName, String password, Integer roleId, Integer createdBy) {
         //明文密码随机加盐加密
         Md5Result md5AndSalt = MD5Utils.getSaltMd5AndSha(password);

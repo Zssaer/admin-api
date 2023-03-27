@@ -1,6 +1,8 @@
 package com.admin.common.result;
 
-import com.alibaba.fastjson.JSON;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -36,8 +38,11 @@ public class ResultBuilder {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Content-type", "application/json;charset=UTF-8");
         response.setStatus(httpCode);
+
+        ObjectMapper mapper = new ObjectMapper();
+
         try {
-            response.getWriter().write(JSON.toJSONString(msg));
+            response.getWriter().write(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(msg));
         } catch (IOException ex) {
         }
     }

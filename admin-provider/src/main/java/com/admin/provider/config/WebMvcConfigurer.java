@@ -26,20 +26,6 @@ public class WebMvcConfigurer implements org.springframework.web.servlet.config.
     @Autowired
     private PathComponent pathComponent;
 
-
-    //使用FastJson 作为JSON MessageConverter
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        FastJsonHttpMessageConverter converter = new FastJsonHttpMessageConverter();
-        FastJsonConfig config = new FastJsonConfig();
-        config.setSerializerFeatures(SerializerFeature.WriteMapNullValue,//保留空的字段
-                SerializerFeature.WriteNullStringAsEmpty);//String null -> ""
-        converter.setFastJsonConfig(config);
-
-        converter.setDefaultCharset(Charset.forName("UTF-8"));
-        converters.add(converter);
-    }
-
     public String getLocalstorageDir(){
         String localStorageDir = "file:/" + pathComponent.getLocalStorageDir();
         return localStorageDir;

@@ -1,5 +1,6 @@
 package com.admin.provider.web.controller.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -22,7 +23,7 @@ public class RegisterReq {
     @ApiModelProperty(value = "管理员角色id", dataType = "Integer")
     private Integer roleId;
     @ApiModelProperty(value = "注册时间", dataType = "LocalDateTime")
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private LocalDateTime registerTime;
 
     public LocalDateTime getRegisterTime() {
