@@ -102,10 +102,10 @@ public class PathComponent {
     public String getAccessUrl(String dbFileName) {
         // 使用OSS服务
         if (configComponent.isOssServer()) {
-            if (ossComponent.ossConfigDto.isPersonal()) {
+            if (OssComponent.ossConfigDto.isPersonal()) {
                 return ossComponent.getPrivateAccessUrl(dbFileName);
             } else {
-                return ossComponent.ossConfigDto.getDomain() + "/" + dbFileName;
+                return OssComponent.ossConfigDto.getDomain() + "/" + dbFileName;
             }
         }
         // 本地处理地址

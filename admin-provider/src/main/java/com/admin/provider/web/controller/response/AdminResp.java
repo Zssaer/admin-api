@@ -1,5 +1,8 @@
 package com.admin.provider.web.controller.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -24,7 +27,8 @@ public class AdminResp {
     @ApiModelProperty(value = "用户状态", dataType = "Integer")
     private Integer adminStatus;
     @ApiModelProperty(value = "注册时间", dataType = "LocalDateTime")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime registerTime;
     @ApiModelProperty(value = "创建者", dataType = "Integer")
     private Integer createBy;

@@ -1,5 +1,7 @@
 package com.admin.provider.web.controller.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 /**
@@ -10,6 +12,7 @@ public class AdminRoleResp {
     private Integer id;
     private String roleName;
     private Integer isSys;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     public Integer getId() {

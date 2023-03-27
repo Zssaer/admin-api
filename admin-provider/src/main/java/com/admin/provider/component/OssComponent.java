@@ -9,6 +9,7 @@ import com.aliyun.oss.model.GeneratePresignedUrlRequest;
 import com.aliyun.oss.model.PutObjectResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +28,7 @@ import static com.admin.provider.component.constant.ConfigKeyConstant.*;
  */
 @Component
 public class OssComponent {
+    @Lazy
     @Autowired
     private PathComponent pathComponent;
     @Autowired
@@ -34,7 +36,7 @@ public class OssComponent {
     @Autowired
     private ConfigService configService;
 
-    public static final OssConfigDto ossConfigDto = new OssConfigDto();
+    static final OssConfigDto ossConfigDto = new OssConfigDto();
 
     @Bean
     private void initOssConfigDTO() {

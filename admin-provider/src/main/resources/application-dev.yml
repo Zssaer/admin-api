@@ -1,4 +1,7 @@
 spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   # Mysql数据库链接信息配置
   datasource:
     username: root

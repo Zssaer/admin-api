@@ -3,6 +3,7 @@ package com.admin.provider.model;
 import com.alibaba.excel.annotation.ExcelProperty;
 import com.alibaba.excel.annotation.write.style.ColumnWidth;
 import com.alibaba.excel.annotation.write.style.ContentStyle;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -62,6 +63,7 @@ public class SysLog {
     @ColumnWidth(20)
     @ExcelProperty(value="操作时间",index = 5)
     @Column(name = "log_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime logTime;
 
     /**

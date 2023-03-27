@@ -15,6 +15,9 @@ spring:
   # 404抛出NoHandlerFoundException错误
   mvc:
     throw-exception-if-no-handler-found=: true
+
+    pathmatch:
+      matching-strategy: ant_path_matcher
   banner:
     charset: UTF-8
   main:

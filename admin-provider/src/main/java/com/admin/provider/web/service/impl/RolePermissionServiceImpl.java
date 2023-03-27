@@ -14,6 +14,7 @@ import com.admin.provider.web.mapper.RolePermissionMapper;
 import com.admin.provider.web.service.AdminPermissionService;
 import com.admin.provider.web.service.AdminService;
 import com.admin.provider.web.service.RolePermissionService;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Condition;
@@ -37,6 +38,7 @@ public class RolePermissionServiceImpl extends AbstractService<RolePermission> i
     private RolePermissionMapper rolePermissionMapper;
     @Resource
     private AdminPermissionService permissionService;
+    @Lazy
     @Resource
     private AdminService adminService;
 
